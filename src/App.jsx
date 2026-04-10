@@ -850,13 +850,17 @@ function FuelLog({ data, setData }) {
       if (!res.ok) throw new Error("Scan failed");
       const d = await res.json();
       setForm({
-        date:        d.date        || new Date().toISOString().slice(0, 10),
-        location:    d.location    || "",
-        dieselGal:   d.diesel_gal  != null ? String(d.diesel_gal)  : "",
-        dieselTotal: d.diesel_total != null ? String(d.diesel_total) : "",
-        gasGal:      d.gas_gal     != null ? String(d.gas_gal)     : "",
-        gasTotal:    d.gas_total   != null ? String(d.gas_total)   : "",
-        notes:       d.notes       || "",
+        date:             d.date                   || new Date().toISOString().slice(0, 10),
+        location:         d.location               || "",
+        dieselGal:        d.diesel_gal             != null ? String(d.diesel_gal)             : "",
+        dieselSubtotal:   d.diesel_subtotal        != null ? String(d.diesel_subtotal)        : "",
+        dieselTaxesFees:  d.diesel_taxes_and_fees  != null ? String(d.diesel_taxes_and_fees)  : "",
+        dieselTotal:      d.diesel_total           != null ? String(d.diesel_total)           : "",
+        gasGal:           d.gas_gal                != null ? String(d.gas_gal)                : "",
+        gasSubtotal:      d.gas_subtotal           != null ? String(d.gas_subtotal)           : "",
+        gasTaxesFees:     d.gas_taxes_and_fees     != null ? String(d.gas_taxes_and_fees)     : "",
+        gasTotal:         d.gas_total              != null ? String(d.gas_total)              : "",
+        notes:            d.notes                  || "",
       });
     } catch {
       setForm({ date: new Date().toISOString().slice(0, 10) });
@@ -959,14 +963,24 @@ function FuelLog({ data, setData }) {
             <div style={{ fontSize: 11, letterSpacing: 1, textTransform: 'uppercase', color: MUTED, marginBottom: 8, marginTop: 4 }}>Diesel</div>
             <div className="grid3">
               <Field label="Gallons"><input type="number" step="0.1" value={form.dieselGal || ""} onChange={e => setForm({ ...form, dieselGal: e.target.value })} placeholder="0.0" /></Field>
+              <Field label="Subtotal $"><input type="number" step="0.01" value={form.dieselSubtotal || ""} onChange={e => setForm({ ...form, dieselSubtotal: e.target.value })} placeholder="0.00" /></Field>
+              <Field label="Taxes & Fees $"><input type="number" step="0.01" value={form.dieselTaxesFees || ""} onChange={e => setForm({ ...form, dieselTaxesFees: e.target.value })} placeholder="0.00" /></Field>
+            </div>
+            <div className="grid3">
               <Field label="Total $"><input type="number" step="0.01" value={form.dieselTotal || ""} onChange={e => setForm({ ...form, dieselTotal: e.target.value })} placeholder="0.00" /></Field>
               <Field label="$ / Gal"><input readOnly value={dieselPPG ? `$${dieselPPG}` : ""} style={{ color: MUTED }} /></Field>
+              <div />
             </div>
             <div style={{ fontSize: 11, letterSpacing: 1, textTransform: 'uppercase', color: MUTED, marginBottom: 8, marginTop: 4 }}>Gas (Dinghy)</div>
             <div className="grid3">
               <Field label="Gallons"><input type="number" step="0.1" value={form.gasGal || ""} onChange={e => setForm({ ...form, gasGal: e.target.value })} placeholder="0.0" /></Field>
+              <Field label="Subtotal $"><input type="number" step="0.01" value={form.gasSubtotal || ""} onChange={e => setForm({ ...form, gasSubtotal: e.target.value })} placeholder="0.00" /></Field>
+              <Field label="Taxes & Fees $"><input type="number" step="0.01" value={form.gasTaxesFees || ""} onChange={e => setForm({ ...form, gasTaxesFees: e.target.value })} placeholder="0.00" /></Field>
+            </div>
+            <div className="grid3">
               <Field label="Total $"><input type="number" step="0.01" value={form.gasTotal || ""} onChange={e => setForm({ ...form, gasTotal: e.target.value })} placeholder="0.00" /></Field>
               <Field label="$ / Gal"><input readOnly value={gasPPG ? `$${gasPPG}` : ""} style={{ color: MUTED }} /></Field>
+              <div />
             </div>
             <Field label="Notes"><textarea value={form.notes || ""} onChange={e => setForm({ ...form, notes: e.target.value })} placeholder="Any notes about this fill-up..." /></Field>
             <div className="modal-footer">
