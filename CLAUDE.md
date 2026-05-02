@@ -330,6 +330,16 @@ Note: There is also a Raymarine Linear Drive installation guide in the docs fold
 
 ---
 
+## Future App Ideas (Backlog)
+
+Features to consider for future development:
+
+- **Embedded AI assistant** — Bot with all manuals, specs, and boat docs as context (Yanmar, Westerbeke, electrical, safety, etc.) so Barrett can ask questions about the boat directly in the app
+- **Fish log** — Tab to log catches with species, size/weight specs, location, date, and photo
+- **Fishing gear category** — Add a Fishing Gear category to the Spare Parts tab for rods, reels, lures, line, tackle, etc.
+
+---
+
 ## Docs Folder
 
 Detailed system notes in `/docs/` — read on demand:

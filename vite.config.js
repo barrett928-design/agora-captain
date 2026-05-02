@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineConfig({
+  base: '/agora-captain/',
   plugins: [
     react(),
     VitePWA({
@@ -11,8 +12,8 @@ export default defineConfig({
         name: 'Agora Captain',
         short_name: 'Agora',
         description: 'S/V Agora — Captain\'s Log',
-        theme_color: '#0a2a3b',
-        background_color: '#0a2a3b',
+        theme_color: '#0d2b3e',
+        background_color: '#F0EAD8',
         display: 'standalone',
         icons: [
           {
@@ -23,7 +24,8 @@ export default defineConfig({
           {
             src: 'icon-512.png',
             sizes: '512x512',
-            type: 'image/png'
+            type: 'image/png',
+            purpose: 'any maskable'
           }
         ]
       }
