@@ -1,0 +1,8 @@
+{
+  "rules": {
+    "agora": {
+      ".read": true,
+      ".write": true
+    }
+  }
+}
