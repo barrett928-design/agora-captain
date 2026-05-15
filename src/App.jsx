@@ -291,6 +291,29 @@ const css = `
   .empty-state { text-align: center; padding: 40px; color: ${MUTED}; font-size: 14px; }
   .row-label { font-size: 12px; color: ${MUTED}; margin-bottom: 2px; text-transform: uppercase; letter-spacing: 0.5px; }
   .row-val { font-size: 14px; color: ${LIGHT}; }
+
+  /* ── Chat bubble ─────────────────────────────────────────────────────────── */
+  .chat-bubble { position: fixed; bottom: 24px; right: 24px; z-index: 90; }
+  .chat-toggle { width: 54px; height: 54px; border-radius: 50%; background: linear-gradient(135deg, #081d2b 0%, ${NAVY} 100%); border: 2px solid ${GOLD}; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 18px rgba(19,61,88,0.4); transition: transform 0.2s; }
+  .chat-toggle:hover { transform: scale(1.07); }
+  .chat-panel { position: fixed; bottom: 92px; right: 24px; width: 360px; max-width: calc(100vw - 32px); height: 520px; max-height: calc(100vh - 120px); background: ${WHITE}; border: 1px solid rgba(26,43,82,0.15); border-radius: 12px; box-shadow: 0 8px 36px rgba(19,61,88,0.28); display: flex; flex-direction: column; z-index: 90; overflow: hidden; }
+  .chat-panel-header { background: linear-gradient(135deg, #081d2b 0%, ${NAVY} 100%); padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid ${GOLD}; flex-shrink: 0; }
+  .chat-panel-title { color: #F0EAD8; font-family: 'Libre Baskerville', serif; font-size: 15px; letter-spacing: 1px; }
+  .chat-panel-sub { color: #9BAAB4; font-size: 11px; letter-spacing: 0.5px; margin-top: 2px; }
+  .chat-close-btn { background: transparent; border: none; color: #9BAAB4; cursor: pointer; font-size: 18px; line-height: 1; padding: 2px 4px; }
+  .chat-close-btn:hover { color: #F0EAD8; }
+  .chat-messages { flex: 1; overflow-y: auto; padding: 16px 14px; display: flex; flex-direction: column; gap: 12px; }
+  .chat-msg { max-width: 86%; padding: 10px 13px; border-radius: 10px; font-size: 14px; line-height: 1.55; white-space: pre-wrap; word-break: break-word; }
+  .chat-msg.user { background: ${NAVY}; color: #F0EAD8; align-self: flex-end; border-bottom-right-radius: 3px; }
+  .chat-msg.bot { background: rgba(26,43,82,0.07); color: ${LIGHT}; align-self: flex-start; border-bottom-left-radius: 3px; border: 1px solid rgba(26,43,82,0.1); }
+  .chat-msg.typing { color: ${MUTED}; font-style: italic; }
+  .chat-input-row { padding: 12px 14px; border-top: 1px solid rgba(26,43,82,0.1); display: flex; gap: 8px; flex-shrink: 0; background: ${WHITE}; }
+  .chat-text-input { flex: 1; border: 1px solid rgba(26,43,82,0.2); border-radius: 6px; padding: 8px 11px; font-size: 14px; font-family: 'Source Sans 3', sans-serif; color: ${LIGHT}; background: #fff; }
+  .chat-text-input:focus { outline: none; border-color: ${TEAL}; }
+  .chat-send-btn { padding: 8px 14px; background: ${GOLD}; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 600; font-family: 'Source Sans 3', sans-serif; white-space: nowrap; }
+  .chat-send-btn:hover { background: #b33d23; }
+  .chat-send-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+  @media (max-width: 480px) { .chat-panel { right: 0; bottom: 76px; width: 100vw; max-width: 100vw; border-radius: 14px 14px 0 0; height: 72vh; } .chat-bubble { bottom: 16px; right: 16px; } }
 `;
 
 // ─── SHARED COMPONENTS ────────────────────────────────────────────────────────
@@ -1045,6 +1068,100 @@ function Checklists() {
 }
 
 // ─── APP ──────────────────────────────────────────────────────────────────────
+// ─── CHAT ASSISTANT ───────────────────────────────────────────────────────────
+const CHAT_URL = "https://chatwithagora-qbqkp5vmrq-uc.a.run.app";
+
+function ChatBot({ data }) {
+  const [open, setOpen] = useState(false);
+  const [messages, setMessages] = useState([]);
+  const [input, setInput] = useState("");
+  const [loading, setLoading] = useState(false);
+  const bottomRef = useRef(null);
+
+  useEffect(() => {
+    if (open) bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, open, loading]);
+
+  async function send() {
+    const text = input.trim();
+    if (!text || loading) return;
+    const next = [...messages, { role: "user", content: text }];
+    setMessages(next);
+    setInput("");
+    setLoading(true);
+    try {
+      const res = await fetch(CHAT_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages: next, appData: data }),
+      });
+      if (!res.ok) throw new Error("server error");
+      const json = await res.json();
+      setMessages(m => [...m, { role: "assistant", content: json.reply }]);
+    } catch {
+      setMessages(m => [...m, { role: "assistant", content: "Sorry, I couldn't connect right now. Try again in a moment." }]);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  function handleKey(e) {
+    if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(); }
+  }
+
+  return (
+    <div className="chat-bubble">
+      {open && (
+        <div className="chat-panel">
+          <div className="chat-panel-header">
+            <div>
+              <div className="chat-panel-title">Agora Assistant</div>
+              <div className="chat-panel-sub">Systems · Maintenance · Passages</div>
+            </div>
+            <button className="chat-close-btn" onClick={() => setOpen(false)}>✕</button>
+          </div>
+          <div className="chat-messages">
+            <div className="chat-msg bot">
+              Hi! Ask me anything about Agora's systems, maintenance, parts, or passage planning.
+            </div>
+            {messages.map((m, i) => (
+              <div key={i} className={`chat-msg ${m.role === "user" ? "user" : "bot"}`}>
+                {m.content}
+              </div>
+            ))}
+            {loading && <div className="chat-msg bot typing">Thinking…</div>}
+            <div ref={bottomRef} />
+          </div>
+          <div className="chat-input-row">
+            <input
+              className="chat-text-input"
+              value={input}
+              onChange={e => setInput(e.target.value)}
+              onKeyDown={handleKey}
+              placeholder="Ask about systems, parts, passages…"
+              disabled={loading}
+            />
+            <button className="chat-send-btn" onClick={send} disabled={loading || !input.trim()}>
+              Send
+            </button>
+          </div>
+        </div>
+      )}
+      <button className="chat-toggle" onClick={() => setOpen(o => !o)} title="Agora Assistant">
+        {open ? (
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F0EAD8" strokeWidth="2.5" strokeLinecap="round">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        ) : (
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="#F0EAD8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        )}
+      </button>
+    </div>
+  );
+}
+
 export default function App() {
   const [tab, setTab] = useState(0);
   const [data, setData] = useState(INITIAL_DATA);
@@ -1100,6 +1217,7 @@ export default function App() {
           {tab === 4 && <SpareParts data={data.parts} setData={update("parts")} />}
         </div>
       </div>
+      <ChatBot data={data} />
     </>
   );
 }
