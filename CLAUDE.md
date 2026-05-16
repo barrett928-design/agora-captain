@@ -39,6 +39,33 @@ The Fuel Log tab has a 📷 Scan Receipt button that uses a Cloud Run service to
 - **Frontend handler:** `handleScan` in `src/App.jsx` (~line 832) — maps snake_case API response to camelCase form state
 - **Always test receipt scanning from the deployed GitHub Pages URL, not localhost**
 
+### AI Assistant — Agora Bot (BUILT AND DEPLOYED)
+The app has a floating chat bubble (bottom-right corner) powered by Claude. This is live and working.
+
+- **UI:** `ChatBot` component in `src/App.jsx` (~line 1074) — floating bubble, chat panel, message history
+- **Chat endpoint:** `https://chatwithagora-qbqkp5vmrq-uc.a.run.app` (Firebase Cloud Function v2)
+- **Scan endpoint:** `https://scanfuelreceipt-qbqkp5vmrq-uc.a.run.app` (existing receipt scan function)
+- **Model:** claude-sonnet-4-6 with prompt caching (`anthropic-beta: prompt-caching-2024-07-31`)
+- **System prompt:** `AGORA_SYSTEM_PROMPT` in `functions/index.js` — contains all boat specs, manual extracts, maintenance records
+- **CORS:** Both functions allow only `https://barrett928-design.github.io`
+- **Function deployment:** GitHub Actions auto-deploys Firebase Functions when `functions/` changes on `main` (`.github/workflows/deploy-functions.yml`)
+- **Frontend deployment:** Manual — `npm run deploy` from local machine → gh-pages branch
+- **Max tokens:** 1,500 per reply | last 20 messages sent per request
+
+### Manual Library (`docs/manuals/`)
+Synthesized reference docs the system prompt is built from:
+- `yanmar-4jh3-te-operation-manual.md` — full engine specs, maintenance schedule, torques
+- `westerbeke-7.6btd-service-manual.md` — injection timing, glow plugs, troubleshooting
+- `garmin-inreach-owners-manual.md` — SOS procedure, battery life, Earthmate pairing
+- `victron-multiplus-12-3000-120-50.md` — specs, PowerAssist, LiFePO4 charger settings
+- `acr-globalfix-v5-epirb.md` — activation, self-test, NFC diagnostics, LED reference
+- `tohatsu-mfs15e-owners-manual.md` — oil specs, maintenance schedule, flush procedure
+- `raymarine-ev1-autopilot.md` — NMEA 2000 troubleshooting, ACU variants, calibration
+- `raymarine-axiom-pro-9.md` — specs, network setup, AIS diagnostics
+
+### IAM / Deployment Reference
+See `docs/deployment.md` for the full Firebase Functions IAM role checklist — needed if deployment ever fails.
+
 ### How to work on this app
 - Barrett is **not a developer** — explain things plainly and step by step
 - Confirm before making any changes
@@ -334,7 +361,6 @@ Note: There is also a Raymarine Linear Drive installation guide in the docs fold
 
 Features to consider for future development:
 
-- **Embedded AI assistant** — Bot with all manuals, specs, and boat docs as context (Yanmar, Westerbeke, electrical, safety, etc.) so Barrett can ask questions about the boat directly in the app
 - **Fish log** — Tab to log catches with species, size/weight specs, location, date, and photo
 - **Fishing gear category** — Add a Fishing Gear category to the Spare Parts tab for rods, reels, lures, line, tackle, etc.
 
