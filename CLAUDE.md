@@ -356,4 +356,13 @@ Detailed system notes in `/docs/` — read on demand:
 - `docs/electrical.md` — Batteries, chargers, Victron, Peplink/Starlink
 - `docs/safety.md` — inReach, EPIRB, PLBs, PFDs
 - `docs/autopilot.md` — Raymarine EV-1 autopilot system
+- `docs/chartplotter.md` — Raymarine Axiom Pro 9s; NMEA 2000 network diagnostics
+- `docs/vhf.md` — ICOM IC-M602; DSC distress procedure, MMSI notes
+- `docs/tohatsu.md` — Tohatsu MFS 15E outboard; oil specs, gasket open item
 - `docs/chatbot-system-prompt.md` — Draft system prompt for the future in-app AI assistant; consolidates all IDs, specs, and quick-reference info
+
+### Manuals still needed (no doc yet)
+- **SeaWater Pro watermaker** — "AC 110/220V, 970W, 40 GPH Dual Membrane"; exact model name uncertain, manual not yet found
+- **Harken Powered Winch** — model number unknown; needs to be read off the winch
+- **Peplink BR1 Mini** — connectivity/IT, lower priority for onboard chatbot
+- **Victron SmartShunt** — partially covered in electrical.md; dedicated manual not extracted
