@@ -154,7 +154,14 @@ See `docs/deployment.md` for the full Firebase Functions IAM role checklist — 
 | Fuel filter | Annually or 500 hrs | Monitor possible fuel leak noted Feb 2026 |
 | Note | — | Possible water leak also noted Feb 2026 — monitor both |
 
+### Dinghy — Achilles 10' Aluminum Hard Bottom RIB
+- **Model:** 23-1-HB310AX-P
+- **Hull ID:** ACH00116I223
+- **TPWD Registration:** TX-1281-MS
+
 ### Outboard (Dinghy) — Tohatsu MFS 15E
+- **Motor ID:** 033029BD
+- **TPWD Registration:** TX-7527-RY
 - **Oil change:** Every 100 hrs or annually. Oil plug gasket is metal shim only — monitor for leaks. Correct replacement gasket still needed
 - **Lower unit gear oil:** Annually
 - **Spark plugs:** Annually
@@ -272,6 +279,7 @@ Note: There is also a Raymarine Linear Drive installation guide in the docs fold
 
 ### Grey Water
 - 2× 80L (21 gal) tanks
+- **Manufacturer:** L'Oceane des Plastic | **Standard:** ISO 8099 | **Tank IDs:** 049746, 050416
 
 ### Heads
 - **Tank meters installed:** Mar 2025 (Judson)
@@ -374,3 +382,13 @@ Detailed system notes in `/docs/` — read on demand:
 - `docs/electrical.md` — Batteries, chargers, Victron, Peplink/Starlink
 - `docs/safety.md` — inReach, EPIRB, PLBs, PFDs
 - `docs/autopilot.md` — Raymarine EV-1 autopilot system
+- `docs/chartplotter.md` — Raymarine Axiom Pro 9s; NMEA 2000 network diagnostics
+- `docs/vhf.md` — ICOM IC-M602; DSC distress procedure, MMSI notes
+- `docs/tohatsu.md` — Tohatsu MFS 15E outboard; oil specs, gasket open item
+- `docs/chatbot-system-prompt.md` — Draft system prompt for the future in-app AI assistant; consolidates all IDs, specs, and quick-reference info
+
+### Manuals still needed (no doc yet)
+- **SeaWater Pro watermaker** — "AC 110/220V, 970W, 40 GPH Dual Membrane"; exact model name uncertain, manual not yet found
+- **Harken Powered Winch** — model number unknown; needs to be read off the winch
+- **Peplink BR1 Mini** — connectivity/IT, lower priority for onboard chatbot
+- **Victron SmartShunt** — partially covered in electrical.md; dedicated manual not extracted

@@ -4,6 +4,7 @@ import { getDatabase } from "firebase/database";
 const firebaseConfig = {
   apiKey: "AIzaSyBx-O0SWkeptc_h1WbKfcvyFYK7c6SHBqA",
   authDomain: "agora-captain.firebaseapp.com",
+  databaseURL: "https://agora-captain-default-rtdb.firebaseio.com",
   projectId: "agora-captain",
   storageBucket: "agora-captain.firebasestorage.app",
   messagingSenderId: "991089692145",

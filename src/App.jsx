@@ -634,6 +634,7 @@ function Projects({ data, setData }) {
   const [filterPri, setFilterPri] = useState("All");
   const [filterStatus, setFilterStatus] = useState("Open");
   const [confirmDelete, setConfirmDelete] = useState(false);
+  const [statusMenu, setStatusMenu] = useState(null);
 
   const openNew = () => { setForm({ priority: "Med", status: "Open", who: "" }); setModal("new"); setConfirmDelete(false); };
   const openEdit = (p) => { setForm({ ...p }); setModal("edit"); setConfirmDelete(false); };
@@ -644,10 +645,10 @@ function Projects({ data, setData }) {
   };
   const del = (id) => { setData(data.filter(p => p.id !== id)); setModal(null); };
 
-  // Status cycling stays on the card for quick updates
-  const cycle = (p) => {
-    const s = { Open: "In Progress", "In Progress": "Done", Done: "Open" };
-    setData(data.map(x => x.id === p.id ? { ...x, status: s[x.status] } : x));
+  // Set status directly from the popup picker
+  const setStatus = (p, newStatus) => {
+    setData(data.map(x => x.id === p.id ? { ...x, status: newStatus } : x));
+    setStatusMenu(null);
   };
 
   const filtered = data
@@ -660,7 +661,7 @@ function Projects({ data, setData }) {
   const openCount = data.filter(p => p.status !== "Done").length;
 
   return (
-    <div>
+    <div onClick={() => setStatusMenu(null)}>
       <div className="action-bar">
         <div>
           <div className="section-title" style={{ margin: 0 }}>Projects & Tasks</div>
@@ -690,16 +691,36 @@ function Projects({ data, setData }) {
                 {p.who && <> · <strong>{p.who}</strong></>}
               </div>
             </div>
-            <div style={{ display: 'flex', gap: 6, alignItems: 'center', flexShrink: 0 }}>
+            <div style={{ display: 'flex', gap: 6, alignItems: 'center', flexShrink: 0, position: 'relative' }}>
               <span className={`badge badge-${p.priority?.toLowerCase() || 'low'}`}>{p.priority}</span>
-              {/* Tapping the status badge cycles it — no need to open the modal */}
+              {/* Tapping the status badge opens a picker — no cycling */}
               <button
-                onClick={() => cycle(p)}
+                onClick={(e) => { e.stopPropagation(); setStatusMenu(statusMenu === p.id ? null : p.id); }}
                 className={`badge badge-${p.status === "Open" ? "open" : p.status === "In Progress" ? "progress" : "done"}`}
                 style={{ cursor: 'pointer', border: 'none', fontFamily: 'inherit' }}
               >
-                {p.status}
+                {p.status} ▾
               </button>
+              {statusMenu === p.id && (
+                <div style={{
+                  position: 'absolute', top: '110%', right: 0, zIndex: 100,
+                  background: '#1e2a38', border: '1px solid #2e3f52', borderRadius: 8,
+                  boxShadow: '0 4px 16px rgba(0,0,0,0.4)', padding: 6, display: 'flex', flexDirection: 'column', gap: 4, minWidth: 120
+                }}>
+                  {STATUSES.map(s => (
+                    <button key={s} onClick={(e) => { e.stopPropagation(); setStatus(p, s); }}
+                      className={`badge badge-${s === "Open" ? "open" : s === "In Progress" ? "progress" : "done"}`}
+                      style={{
+                        cursor: 'pointer', border: s === p.status ? '1px solid #fff' : 'none',
+                        fontFamily: 'inherit', padding: '5px 10px', textAlign: 'left', borderRadius: 6,
+                        opacity: s === p.status ? 1 : 0.7
+                      }}
+                    >
+                      {s === p.status ? '✓ ' : ''}{s}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
           {p.notes && <div className="card-body"><div className="meta">{p.notes}</div></div>}
