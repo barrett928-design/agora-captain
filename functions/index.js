@@ -301,6 +301,8 @@ exports.chatWithAgora = onRequest(
     secrets: [anthropicKey],
     cors: ["https://barrett928-design.github.io"],
     invoker: "public",
+    maxInstances: 3,
+    timeoutSeconds: 30,
   },
   async (req, res) => {
     if (req.method !== "POST")
@@ -309,6 +311,9 @@ exports.chatWithAgora = onRequest(
     const { messages, appData } = req.body;
     if (!Array.isArray(messages) || messages.length === 0)
       return res.status(400).json({ error: "Missing messages" });
+
+    // Trim to last 20 messages to cap token cost on long sessions
+    const trimmed = messages.slice(-20);
 
     const client = new Anthropic({ apiKey: anthropicKey.value() });
 
@@ -328,7 +333,7 @@ exports.chatWithAgora = onRequest(
               text: `## Current App Data\n\n${formatAppData(appData)}`,
             },
           ],
-          messages,
+          messages: trimmed,
         },
         { headers: { "anthropic-beta": "prompt-caching-2024-07-31" } }
       );

@@ -1085,6 +1085,7 @@ function ChatBot({ data }) {
   async function send() {
     const text = input.trim();
     if (!text || loading) return;
+    if (messages.length >= 50) return;
     const next = [...messages, { role: "user", content: text }];
     setMessages(next);
     setInput("");
@@ -1093,7 +1094,7 @@ function ChatBot({ data }) {
       const res = await fetch(CHAT_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: next, appData: data }),
+        body: JSON.stringify({ messages: next.slice(-20), appData: data }),
       });
       if (!res.ok) throw new Error("server error");
       const json = await res.json();
@@ -1132,6 +1133,11 @@ function ChatBot({ data }) {
             {loading && <div className="chat-msg bot typing">Thinking…</div>}
             <div ref={bottomRef} />
           </div>
+          {messages.length >= 50 && (
+            <div style={{ padding: "8px 14px", fontSize: 12, color: MUTED, textAlign: "center", borderTop: `1px solid rgba(26,43,82,0.1)` }}>
+              Session limit reached — refresh to start a new conversation.
+            </div>
+          )}
           <div className="chat-input-row">
             <input
               className="chat-text-input"
@@ -1139,7 +1145,7 @@ function ChatBot({ data }) {
               onChange={e => setInput(e.target.value)}
               onKeyDown={handleKey}
               placeholder="Ask about systems, parts, passages…"
-              disabled={loading}
+              disabled={loading || messages.length >= 50}
             />
             <button className="chat-send-btn" onClick={send} disabled={loading || !input.trim()}>
               Send
