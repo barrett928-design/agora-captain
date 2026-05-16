@@ -17,13 +17,16 @@ jobs:
         with:
           node-version: "22"
 
+      - name: Install root dependencies
+        run: npm install --legacy-peer-deps
+
       - name: Install function dependencies
         run: cd functions && npm install
 
-      - name: Write service account key
-        run: echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}' > /tmp/sa.json
-
       - name: Deploy functions
-        run: npx firebase deploy --only functions --project agora-captain
         env:
           GOOGLE_APPLICATION_CREDENTIALS: /tmp/sa.json
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: |
+          echo "$FIREBASE_SERVICE_ACCOUNT" > /tmp/sa.json
+          npx firebase deploy --only functions --project agora-captain
