@@ -195,6 +195,91 @@ Key passage considerations for family sailing:
 - Primary chandleries south of USVI: Budget Marine (Caribbean-wide), Island Water World (Grenada)
 - West Marine presence: USVI and Puerto Rico only
 - Parts availability decreases going south — order critical spares before leaving Puerto Rico or Antigua
+
+---
+
+## Garmin inReach SE+ / Explorer+
+
+Source: Official Owner's Manual, Dec 2022 (190-02165-00_0H)
+Network: Iridium satellite — global, works offshore everywhere
+Battery: 3,100 mAh built-in lithium-ion
+Water rating: IPX7 (1m / 30 min immersion)
+Operating temp: -20°C to 60°C | Charging temp: 0°C to 45°C
+
+Battery life by mode:
+- Default (10-min send, 1-min log): up to 100 hours
+- Extended tracking (30-min send): up to 30 days
+- Turned off: up to 3 years
+
+SOS procedure (step-by-step):
+1. Lift protective cap over SOS button
+2. Press and hold SOS button — wait for countdown
+3. Device sends GPS location to Garmin Response center every 1 minute for first 10 min, then every 10 min moving / 30 min stationary
+4. REPLY to confirmation message — confirms you can communicate (if no reply, rescue still initiated)
+5. To cancel: lift cap, hold SOS key, select Cancel, wait for confirmation
+
+Custom SOS: SOS > Emergency > Write SOS > compose message > Send
+
+Testing: Always test before a passage — Select Test > Test (requires outdoor satellite view)
+Earthmate app pairing: Settings > Bluetooth > Pair Device (10 ft range)
+Marine weather forecasts: Weather > Get Forecast > Marine > Enabled (incurs data charges)
+
+Device care: Rinse with fresh water after salt exposure; dry USB port before charging
+2× units on Agora — mount to inflatable lifejackets; wear on all offshore passages
+
+---
+
+## Westerbeke 7.6KW BTD — Service Manual Notes
+
+Source: Westerbeke Service Manual, Publication No. 038673, Third Edition, September 1999
+Agora's unit: Serial 132820-E504, manufactured May 2, 2005
+
+Injection timing: 16° BTDC (spill timing with engine in operating condition)
+Timing adjustment: adding/removing shim under injection pump — 0.004 in (0.10 mm) = ~1 degree change
+  Advance timing → decrease shim thickness
+  Retard timing → increase shim thickness
+
+Glow plugs:
+- Torque: 1–1.5 ft-lbs with anti-seize compound
+- Resistance: 1.5–2 ohms = good
+- Current draw: 8–9 amps per plug
+- Do NOT energize for more than 30 seconds continuously
+- Inspect tip for erosion/carbon; clean before reinstalling
+
+Fuel injectors:
+- Opening pressure: ~2,133 psi (15 kgf/cm²)
+- Spray pattern test: atomized cone, no dripping; replace if pattern is poor
+- Shim adjustment: 0.002 in (0.05 mm) = ~71 psi pressure change
+
+Raw water pump assembly:
+- Apply ONLY petroleum jelly to impeller vanes and bore — NOT oil or grease
+- Rotate shaft while inserting impeller so vanes bend in correct direction
+- Check shaft rotates smoothly after assembly
+- Inspect lip seals and end caps; replace any worn parts
+
+Engine troubleshooting categories: low cranking speed, fails to start, injection out of adjustment, insufficient fuel, insufficient air, excessive exhaust smoke (whitish/purplish = oil consumption / low compression; blackish/blue-gray = fuel/air/injector issue)
+
+Generator maintenance: clean slip rings if run 10+ hours between loads; monitor for heat buildup
+Zinc (anode) P/N 011885: replace every 6 months — critical, had to chisel out when missed; clean threads each time
+Possible fuel leak + water leak noted Feb 2026 — inspect gaskets, fuel pump diaphragm, heat exchanger
+
+---
+
+## Peplink BR1 Mini — Cellular Modem
+
+Installed January 2025 with Michael
+Type: CAT-7 LTE with dual-band Wi-Fi 5, GPS
+Router throughput: 300 Mbps
+LTE data rate: 300 Mbps down / 150 Mbps up (CAT-7)
+SpeedFusion VPN throughput: 80 Mbps (no encryption), 60 Mbps (256-bit AES)
+Power: 10–30V DC or AC adapter 100–240V; 13W nominal / 18W max
+Operating temp: -40°C to 65°C
+WAN: 1× Ethernet + 1× embedded cellular (dual SIM slots)
+LAN: 2× Ethernet
+Carrier certified: AT&T, T-Mobile, Verizon, FirstNet
+Management: InControl2 cloud platform (remote config and monitoring)
+Hot Failover/WAN Smoothing: available with PrimeCare subscription
+GPS antenna included — can provide position data to network devices
 `;
 
 function formatAppData(appData) {
