@@ -41,7 +41,12 @@ Registration & IDs:
 
 ## Main Engine — Yanmar 4JH3-TE
 
-Serial: E15158 | 4 cylinders | 75 hp @ 3,800 rpm
+Source: Official Yanmar 4JH3-TE Operation Manual
+Serial: E15158 | 4 cylinders, 84mm bore × 90mm stroke | 1.995L displacement
+Turbocharger: RHB52 (IHI) water-cooled, forced lubrication
+Continuous rating: 50.7 kW (69 hp) @ 3,700 rpm | Max output: 55.2 kW (75 hp) @ 3,800 rpm
+Starter: DC12V/1.4kW | Alternator: DC12V/55A
+Fuel injection pump: Bosch VE (ZEXEL) | Nozzle: YDLLA-P (5-0.22×150°)
 
 CRITICAL — Hour Meter Offset: Add 1,709 hours to the meter reading to get actual engine hours.
 Example: meter reads 2,276 → actual hours = 3,985
@@ -50,22 +55,54 @@ Fuel burn: ~2–3 gal/hr @ 2,800 RPM (~7 kts) | 2.36 gal/hr @ 2,600 RPM (motor-s
 Diesel tank capacity: ~62 gallons
 Prop: Max Prop — pitch setting H (front/big E on back/small)
 Alternator belt: REMG-6460
-Oil: SAE 30 or 15W-40 | ~2.5 qts + half quart extra when changing (oil retained in old filter)
-Oil filter: P/N 129150-35153
 
-Maintenance schedule:
-- Oil & filter change: 250 hrs or annually — last Feb 2026 @ meter 2,276 (actual 3,985 hrs)
-- Fuel filters (primary + secondary): 250 hrs or annually — always replace both together
-- Marine gear oil: 250 hrs (first change at 50 hrs) — wash oil filter at same time
-- Raw water impeller: 500 hrs or 2 years — never run dry; 5 spares on hand
-- Coolant flush: 500 hrs or 2 years — inspect hoses for softness/cracks; last Feb 2026
-- V-belt (REMG-6460): 500 hrs or 2 years — 3 spares on hand
-- Air filter: annually — 4 spares in Salon Seat
-- Thermostat: 3–5 years or if overheating — 1 spare on hand
-- Turbocharger blower wash: 500 hrs — pour wash fluid gradually, never all at once
-- Valve clearance / injection timing: 1,000 hrs or 4 years — dealer service required
+Oil specs (from Yanmar manual): API CD, SAE 15W40
+Oil capacity: 5.2L oilpan / 6.3L total (add ~0.5L extra when changing for oil in old filter)
+Oil filter P/N: 129150-35151 | Fuel filter P/N: 129574-55710
+Marine gear oil (KMH4A): API CC+, SAE #20 or #30 (no multi-grade), 2.0L capacity
 
-Spares on hand: Fuel filters ×8 (Salon Seat Drawer) | Oil filter 129150-35153 ×2 (Salon Seat Drawer) | Impeller ×5 (Salon Seat Drawer) | SW Pump Repair Kit ×2 (Salon Seat Drawer) | V-Belt REMG-6460 ×3 (Salon Seat Drawer) | Thermostat ×1 (Salon Seat Drawer) | Air Filters ×4 (Salon Seat)
+Key torques: Oil filter 19.6–23.5 N·m | Fuel filter 11.8–15.6 N·m
+
+Maintenance schedule (from official Yanmar manual):
+- Daily: check oil level, check coolant subtank, check seawater discharge, check fuel, check alarm lamps
+- 50 hrs (1st time): oil & filter change, marine gear oil change, drain fuel tank and filter
+- 250 hrs / 1 yr: replace fuel filter (129574-55710), oil & filter change, replace marine gear oil, replace coolant (LLC), adjust V-belt, wash turbocharger blower
+- 500 hrs / 2 yrs: adjust valve clearance (dealer), check fuel injection pressure (dealer)
+- 1,000 hrs / 4 yrs: inspect/replace seawater pump impeller, replace mixing elbow, clean cooling passages, check injection timing (dealer)
+- 2,000 hrs: mandatory seawater pump impeller replacement
+- Impeller direction: shaft turns clockwise, blades install counterclockwise — critical!
+
+Last service: Feb 2026 @ meter 2,276 (actual 3,985 hrs) — oil, filter, coolant flush done
+Next oil/filter due: meter ~2,526 (actual ~4,235 hrs) or Feb 2027
+Next fuel filter due: same interval
+
+Turbocharger blower wash procedure:
+- Run at 2,500–3,000 rpm in neutral
+- Pour 50cc blower wash (P/N 974500-00400) gradually over 10 seconds
+- After 3 min, pour 50cc fresh water gradually over 10 seconds
+- Do NOT pour all at once — water hammer will damage blades
+
+Starting procedure:
+1. Confirm gear in NEUTRAL
+2. Key to ON — alarm lamps illuminate (confirms alarms working)
+3. Key to START — release when engine fires (key auto-returns to ON)
+4. Confirm alarm lamps extinguish and buzzer stops
+- Do NOT hold starter more than 15 seconds; wait 15 seconds between attempts
+- Air in fuel is the most common start failure — bleed fuel system
+
+Alarm lamp responses:
+- Charge lamp: check V-belt tension and battery
+- C.W. Temp lamp: check/replenish coolant immediately
+- L.O. Press lamp: stop engine, replenish oil immediately
+- Fuel Filter lamp: drain fuel filter (water in filter)
+- Any alarm underway: neutral, low idle, identify cause, return to port if uncertain
+
+Emergency marine gear (KMH4A only — if gear fails completely):
+- Emergency bolt at back of gear locks clutch to engine — FORWARD ONLY, no neutral/reverse
+- Max 1,000 rpm — no clutch use or it breaks the gear
+- Torque emergency bolts to 18.6±1.0 N·m — fill gear oil to filler port mouth
+
+Spares on hand: Fuel filters ×8 (Salon Seat Drawer) | Oil filter 129150-35151 ×2 (Salon Seat Drawer) | Impeller ×5 (Salon Seat Drawer) | SW Pump Repair Kit ×2 (Salon Seat Drawer) | V-Belt REMG-6460 ×3 (Salon Seat Drawer) | Thermostat ×1 (Salon Seat Drawer) | Air Filters ×4 (Salon Seat)
 
 ---
 
