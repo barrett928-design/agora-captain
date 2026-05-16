@@ -2,7 +2,21 @@
 
 When the in-app AI assistant gets built, this file is the starting point for its system prompt. It consolidates all boat IDs, specs, and quick-reference info Barrett would want to look up on the water.
 
-Pull in the full contents of the other docs/ files (yanmar.md, westerbeke.md, electrical.md, safety.md, autopilot.md) for deeper system knowledge. This file covers the identity and registration layer.
+Pull in the full contents of all docs/ files for deeper system knowledge. This file covers the identity and registration layer.
+
+**Current docs/ files to include:**
+- `yanmar.md` — Yanmar 4JH3-TE engine (oil, filters, maintenance schedule)
+- `westerbeke.md` — Westerbeke 7.6 BTD generator (oil, zinc, cooling, active leak notes)
+- `electrical.md` — Batteries, chargers, Victron, Peplink/Starlink
+- `safety.md` — inReach, EPIRB, PLBs, PFDs, SOS procedures
+- `autopilot.md` — Raymarine EV-1, open disengagement issue, NMEA 2000 notes
+- `chartplotter.md` — Raymarine Axiom Pro 9s, network diagnostics, LightHouse OS
+- `vhf.md` — ICOM IC-M602, DSC distress procedure, MMSI
+- `tohatsu.md` — Tohatsu MFS 15E outboard, oil/gear specs, flush procedure
+
+**Manuals not yet documented (pending):**
+- Harken Powered Winch — model number still needed from unit
+- SeaWater Pro watermaker — exact model name needed from unit/paperwork
 
 ---
 
