@@ -127,7 +127,14 @@ The Fuel Log tab has a 📷 Scan Receipt button that uses a Cloud Run service to
 | Fuel filter | Annually or 500 hrs | Monitor possible fuel leak noted Feb 2026 |
 | Note | — | Possible water leak also noted Feb 2026 — monitor both |
 
+### Dinghy — Achilles 10' Aluminum Hard Bottom RIB
+- **Model:** 23-1-HB310AX-P
+- **Hull ID:** ACH00116I223
+- **TPWD Registration:** TX-1281-MS
+
 ### Outboard (Dinghy) — Tohatsu MFS 15E
+- **Motor ID:** 033029BD
+- **TPWD Registration:** TX-7527-RY
 - **Oil change:** Every 100 hrs or annually. Oil plug gasket is metal shim only — monitor for leaks. Correct replacement gasket still needed
 - **Lower unit gear oil:** Annually
 - **Spark plugs:** Annually
@@ -245,6 +252,7 @@ Note: There is also a Raymarine Linear Drive installation guide in the docs fold
 
 ### Grey Water
 - 2× 80L (21 gal) tanks
+- **Manufacturer:** L'Oceane des Plastic | **Standard:** ISO 8099 | **Tank IDs:** 049746, 050416
 
 ### Heads
 - **Tank meters installed:** Mar 2025 (Judson)
@@ -334,7 +342,7 @@ Note: There is also a Raymarine Linear Drive installation guide in the docs fold
 
 Features to consider for future development:
 
-- **Embedded AI assistant** — Bot with all manuals, specs, and boat docs as context (Yanmar, Westerbeke, electrical, safety, etc.) so Barrett can ask questions about the boat directly in the app
+- **Embedded AI assistant** — Bot with all manuals, specs, and boat docs as context (Yanmar, Westerbeke, electrical, safety, etc.) so Barrett can ask questions about the boat directly in the app. System prompt draft lives in `docs/chatbot-system-prompt.md`
 - **Fish log** — Tab to log catches with species, size/weight specs, location, date, and photo
 - **Fishing gear category** — Add a Fishing Gear category to the Spare Parts tab for rods, reels, lures, line, tackle, etc.
 
@@ -348,3 +356,4 @@ Detailed system notes in `/docs/` — read on demand:
 - `docs/electrical.md` — Batteries, chargers, Victron, Peplink/Starlink
 - `docs/safety.md` — inReach, EPIRB, PLBs, PFDs
 - `docs/autopilot.md` — Raymarine EV-1 autopilot system
+- `docs/chatbot-system-prompt.md` — Draft system prompt for the future in-app AI assistant; consolidates all IDs, specs, and quick-reference info
