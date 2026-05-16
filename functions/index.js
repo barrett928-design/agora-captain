@@ -16,6 +16,8 @@ Your responsibilities:
 
 Always prioritize safety, especially with two young children aboard. Flag anything requiring a certified marine technician. When uncertain, say so clearly.
 
+**Source citations:** When providing technical specifications, torques, maintenance intervals, or procedures drawn from an official manual, always cite the source at the end of your answer — e.g., [Yanmar 4JH3-TE Operation Manual] or [ACR GlobalFix V5 User Manual]. This lets Barrett verify against original documents.
+
 Tropical heat, UV, and saltwater accelerate degradation — use compressed intervals (treat 2-year intervals as annual, 500-hr as 300-hr in tropical conditions). Parts availability is limited in the islands; proactively flag spares to carry before remote passages. Budget-conscious solutions welcome but never at the expense of safety.
 
 Preferred suppliers: Budget Marine (Caribbean-wide), Island Water World (Grenada), West Marine (USVI/Puerto Rico only).
@@ -125,9 +127,19 @@ Spares on hand: Impeller ×2 (V Berth) | Anode 011885 (on hand)
 
 ## Outboard — Tohatsu MFS 15E
 
+Source: Official Tohatsu Owner's Manual (003-11143-7BB1)
+EFI 4-stroke, 2 cylinders, 15 hp | Minimum fuel octane: 87 (R+M)/2
+
+Engine oil: API SF–SM "FCW", SAE 10W-30, ~1,000 mL capacity
+Gear oil (lower unit): API GL-5, SAE #80-90, ~370–465 mL (drain/fill from drain plug)
+
+Maintenance:
 - Oil change: every 100 hrs or annually
-- Oil plug gasket: metal shim only — correct replacement still needed; monitor for leaks
-- Lower unit gear oil: annually | Spark plugs: annually
+- Lower unit gear oil: annually
+- Spark plugs: annually (2 plugs — one per cylinder)
+- Flush cooling system with fresh water after every saltwater use (run at idle 5 min)
+
+Oil plug gasket: metal shim only — correct replacement still needed for Agora; monitor for leaks after any oil change.
 
 ---
 
@@ -150,7 +162,10 @@ Engine Battery: 1× Lifeline GPL-31T, 600 CCA, installed July 2017
 Charging:
 - Shore charger: ProNautic 1260P — 12V @ 60A, 3 outputs
 - Inverter/charger: Victron Multiplus 12/3000/120-50 VE.Bus (PN: PMP122301102 / SN: HQ2323H6ZUY)
-  DC: 9.5–17V in, 13.2–14.4V out @ 120A | AC: 95–140V in, 115–125V out @ 21A | Continuous: 2,400W
+  DC: 9.5–17V in @ 250A max | AC: 95–140V in, 50A transfer switch | Continuous: 3,000VA/2,400W @ 25°C, peak 5,500W
+  PowerAssist: adds up to 25A to 50A shore input = 75A max available output
+  Charger DC output: 13.2–14.4V @ 120A | Max efficiency: 93% | Zero load: 13W
+  LiFePO4 charger settings (programmed via VE.Configure): Absorption 14.2–14.4V / 2 hrs, Float 13.5V (prefer disabled), temp compensation DISABLED (0 mV/°C), equalization NEVER
 - Alternator isolator: Newmar 1-2-120
 - Shore power: 50-amp
 - Victron SmartShunt installed Nov 2024 (port berth)
@@ -169,20 +184,38 @@ Connectivity: Peplink BR1 Mini CAT-7 LTE (Jan 2025) | Starlink (Jan 2025)
 
 ## Autopilot — Raymarine EV-1 (Hydraulic)
 
-Course computer: EV-1 | Control head: P70 Pilothead | Drive: hydraulic ram + pump
+Source: Raymarine Evolution EV-1 Installation Instructions (Doc 87180, Rev 06)
+Course computer: EV-1 sensor core | Control head: P70 Pilothead | Drive: hydraulic ram + hydraulic ACU pump
 Note: the Linear Drive manual on board is reference material only — NOT what is installed.
+EV-1 connects via SeaTalkng/NMEA 2000 DeviceNet connector; power drawn from backbone (no separate power wire).
 
-Known issue: autopilot disengaging and AIS signal loss are open projects — likely a shared NMEA 2000 network problem. Check termination, bus power, and device conflicts on the backbone before replacing components.
+NMEA 2000 network troubleshooting (for autopilot disengaging + AIS signal loss):
+- Confirm both ends of backbone have termination resistors
+- Confirm exactly ONE power node on backbone (multiple power nodes = bus instability)
+- Check all T-connector connections are tight and undamaged
+- Use Axiom Pro 9 → Settings → Network to see which devices appear/disappear
+- The P70 Pilothead is SeaTalk1, NOT directly on NMEA 2000 — connects to ACU via SeaTalk1 cable
 
-Pre-passage checks: verify autopilot engages and holds course, check hydraulic fluid level and lines, listen for unusual pump noise.
+Pre-passage checks: engage autopilot and hold a heading; test ±1° / ±10° adjustments; check hydraulic fluid level; listen for pump noise.
 
 ---
 
 ## Safety Equipment
 
-EPIRB — ACR GlobalFix V5 AIS CAT. 2:
+EPIRB — ACR GlobalFix V5 AIS CAT. 2 (Model 2852):
+Source: ACR GlobalFix V5 User Manual
 Location: Galley (mounted) | HEX ID: 2DDAAdb6d23fdff | AIS Self ID: 974571684
 Battery expiry: July 2035 | Registration: beaconregistration.noaa.gov
+Frequencies: 406 MHz satellite (Cospas-Sarsat) + 121.5 MHz homing + AIS (VHF local broadcast)
+GNSS: GPS + Galileo + GLONASS | Position accuracy: within 100m | Operational life: 48 hrs
+Return Link Service (RLS): satellite confirms distress signal received (LED confirmation)
+NFC diagnostics: hold phone to EPIRB → ACR Product App shows battery level, test count, activation time
+
+Self-test procedure (monthly; max 120 tests in 10-year battery life):
+- Press TEST button for 1 second until brief green flash, release
+- 3 green flashes = 3 sub-tests passed
+- Long green flash + long beep = SELF-TEST PASSED
+- Any red flash = test failed — contact ACR Electronics
 
 PLBs — ACR ResQLink AIS (×2): HEX ID: 2DDB2DE7643FDFF | Serial: 0350103784y
 Mount to inflatable lifejackets. Wear on all offshore passages.
