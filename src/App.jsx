@@ -16,23 +16,23 @@ const INITIAL_DATA = {
     { id: 7, date: "2025-01-04", engHrs: "", genHrs: "", distance: "", depart: "", arrive: "", wind: "", weather: "", notes: "Man overboard drills with Farley", crew: "Farley" },
   ],
   maintenance: [
-    { id: 1, date: "2024-01-13", engHrs: "", system: "Generator", equipment: "Anode", action: "Replaced", crew: "Barrett", notes: "Had to chisel out — don't wait months to check", partLink: "" },
-    { id: 2, date: "2024-02-19", engHrs: "", system: "Generator", equipment: "Oil/Filter", action: "Oil change", crew: "Barrett", notes: "Took full gallon. Sierra oil filter ok for Westerbeke.", partLink: "Sierra 23-7800" },
+    { id: 1, date: "2024-01-13", engHrs: "", system: "Westerbeke", equipment: "Anode", action: "Replaced", crew: "Barrett", notes: "Had to chisel out — don't wait months to check", partLink: "" },
+    { id: 2, date: "2024-02-19", engHrs: "", system: "Westerbeke", equipment: "Oil/Filter", action: "Oil change", crew: "Barrett", notes: "Took full gallon. Sierra oil filter ok for Westerbeke.", partLink: "Sierra 23-7800" },
     { id: 3, date: "2024-02-19", engHrs: "", system: "Yanmar", equipment: "Oil/Filter", action: "Oil change", crew: "Barrett", notes: "Half quart to catch oil from filter", partLink: "" },
-    { id: 4, date: "2024-07-07", engHrs: "", system: "Generator", equipment: "Anode", action: "Replaced", crew: "Barrett", notes: "Need to clean threads, can't screw in fully", partLink: "" },
+    { id: 4, date: "2024-07-07", engHrs: "", system: "Westerbeke", equipment: "Anode", action: "Replaced", crew: "Barrett", notes: "Need to clean threads, can't screw in fully", partLink: "" },
     { id: 5, date: "2024-11-30", engHrs: "", system: "Electrical", equipment: "Wiring", action: "Installed SmartShunt", crew: "Barrett, Andrew", notes: "Cleaned up wiring under port berth, added fuse box and negative bus.", partLink: "" },
     { id: 6, date: "2025-01-09", engHrs: "", system: "AC", equipment: "Raw Water Pump", action: "Replaced", crew: "Barrett", notes: "", partLink: "" },
-    { id: 7, date: "2025-01-19", engHrs: "", system: "Generator", equipment: "Oil/Filter", action: "Oil change", crew: "Barrett", notes: "", partLink: "" },
+    { id: 7, date: "2025-01-19", engHrs: "", system: "Westerbeke", equipment: "Oil/Filter", action: "Oil change", crew: "Barrett", notes: "", partLink: "" },
     { id: 8, date: "2025-01-19", engHrs: "", system: "Yanmar", equipment: "Oil/Filter", action: "Oil change", crew: "Barrett", notes: "", partLink: "" },
     { id: 9, date: "2025-01-26", engHrs: "", system: "Electrical", equipment: "Wiring", action: "Installed Peplink Modem + Starlink", crew: "Barrett, Michael", notes: "", partLink: "" },
     { id: 10, date: "2025-03-11", engHrs: "", system: "Heads", equipment: "Tank Meters", action: "Installed", crew: "Judson", notes: "Front: 1-2 flushes after full light. Aft: do not use after full light.", partLink: "" },
     { id: 11, date: "2025-06-25", engHrs: "", system: "Bilge", equipment: "Bilge Pump", action: "Replaced", crew: "Barrett", notes: "", partLink: "Jabsco 37202-2012" },
-    { id: 12, date: "2025-10-14", engHrs: "", system: "Generator", equipment: "Oil/Filter", action: "Oil change", crew: "Barrett", notes: "", partLink: "" },
+    { id: 12, date: "2025-10-14", engHrs: "", system: "Westerbeke", equipment: "Oil/Filter", action: "Oil change", crew: "Barrett", notes: "", partLink: "" },
     { id: 13, date: "2025-10-14", engHrs: "", system: "Yanmar", equipment: "Oil/Filter", action: "Oil change", crew: "Barrett", notes: "", partLink: "" },
     { id: 14, date: "2025-11-05", engHrs: "", system: "Hull", equipment: "Bottom Paint", action: "New bottom paint", crew: "", notes: "", partLink: "" },
     { id: 15, date: "2026-01-19", engHrs: "", system: "Heads", equipment: "Macerators", action: "Replaced both", crew: "Barrett", notes: "One Jabsco left", partLink: "" },
     { id: 16, date: "2026-02-28", engHrs: "2276", system: "Yanmar", equipment: "Oil/Coolant", action: "Oil change and coolant", crew: "Barrett", notes: "", partLink: "" },
-    { id: 17, date: "2026-02-28", engHrs: "4420", system: "Generator", equipment: "Oil/Filter/Zinc", action: "Oil change and zinc", crew: "Barrett", notes: "Possible water leak and small fuel leak — monitor", partLink: "" },
+    { id: 17, date: "2026-02-28", engHrs: "4420", system: "Westerbeke", equipment: "Oil/Filter/Zinc", action: "Oil change and zinc", crew: "Barrett", notes: "Possible water leak and small fuel leak — monitor", partLink: "" },
     { id: 18, date: "2026-02-28", engHrs: "", system: "Tohatsu", equipment: "Oil", action: "Oil change", crew: "Barrett", notes: "Oil plug gasket missing (metal washer only). Replacements wrong size — monitor.", partLink: "" },
   ],
   projects: [
@@ -134,10 +134,10 @@ const MAINTENANCE_SCHEDULE = [
   { system: "Yanmar", task: "Thermostat replacement", interval: "Every 3–5 years or if overheating", notes: "1 spare on hand. Cheap insurance against overheating." },
   { system: "Yanmar", task: "Turbocharger blower wash", interval: "Every 500 hrs", notes: "Pour blower wash fluid gradually into intake — never all at once. Run at high speed 2500–3000 RPM." },
   { system: "Yanmar", task: "Valve clearance & fuel injection timing", interval: "Every 1,000 hrs or 4 years", notes: "Dealer/technician service required." },
-  { system: "Generator", task: "Engine oil & filter change", interval: "Every 200 hrs or annually", notes: "Takes ~1 full gallon. Sierra 23-7800 filter works. Last done Feb 2026 @ 4420 hrs." },
-  { system: "Generator", task: "Zinc (anode) replacement", interval: "Every 6 months", notes: "Critical — had to chisel out Jan 2024 after waiting too long. Clean threads each time. Part #011885." },
-  { system: "Generator", task: "Raw water impeller replacement", interval: "Annually", notes: "Check raw water flow before start of each season. 2 spares (Westerbeke) in V Berth." },
-  { system: "Generator", task: "Fuel filter replacement", interval: "Annually or every 500 hrs", notes: "Monitor for the possible fuel leak noted Feb 2026." },
+  { system: "Westerbeke", task: "Engine oil & filter change", interval: "Every 200 hrs or annually", notes: "Takes ~1 full gallon. Sierra 23-7800 filter works. Last done Feb 2026 @ 4420 hrs." },
+  { system: "Westerbeke", task: "Zinc (anode) replacement", interval: "Every 6 months", notes: "Critical — had to chisel out Jan 2024 after waiting too long. Clean threads each time. Part #011885." },
+  { system: "Westerbeke", task: "Raw water impeller replacement", interval: "Annually", notes: "Check raw water flow before start of each season. 2 spares (Westerbeke) in V Berth." },
+  { system: "Westerbeke", task: "Fuel filter replacement", interval: "Annually or every 500 hrs", notes: "Monitor for the possible fuel leak noted Feb 2026." },
   { system: "Tohatsu", task: "Engine oil change", interval: "Every 100 hrs or annually", notes: "Oil plug gasket is a metal shim only — monitor for leaks. Correct replacement gasket still needed." },
   { system: "Tohatsu", task: "Lower unit gear oil change", interval: "Annually", notes: "" },
   { system: "Tohatsu", task: "Spark plug inspection", interval: "Annually", notes: "" },
@@ -162,7 +162,7 @@ const MAINTENANCE_SCHEDULE = [
   { system: "Bilge", task: "Bilge pump test", interval: "Monthly", notes: "Test auto float switch and manual override. Last pump replaced Jun 2025 (Jabsco 37202-2012)." },
 ];
 
-const SYSTEMS = ["Yanmar", "Generator", "Westerbeke", "Tohatsu", "AC", "Electrical", "Heads", "Bilge", "Hull", "Plumbing", "Rigging", "Safety", "Other"];
+const SYSTEMS = ["Yanmar", "Westerbeke", "Tohatsu", "AC", "Electrical", "Heads", "Bilge", "Hull", "Plumbing", "Rigging", "Safety", "Other"];
 const LOCATIONS = ["Bow", "Stern", "Salon", "Galley", "Aft Head", "Fwd Head", "V Berth", "Kid Bunks", "Midship", "Universal"];
 const PRIORITIES = ["High", "Med", "Low"];
 const STATUSES = ["Open", "In Progress", "Done"];
@@ -393,7 +393,7 @@ function ScheduleModal({ onClose, maintenanceData }) {
   const filtered = MAINTENANCE_SCHEDULE.filter(r => filterSys === "All" || r.system === filterSys);
 
   const currentYanmarHrs = Math.max(0, ...maintenanceData.filter(m => m.system === "Yanmar" && m.engHrs).map(m => parseFloat(m.engHrs)));
-  const currentGenHrs = Math.max(0, ...maintenanceData.filter(m => m.system === "Generator" && m.engHrs).map(m => parseFloat(m.engHrs)));
+  const currentGenHrs = Math.max(0, ...maintenanceData.filter(m => m.system === "Westerbeke" && m.engHrs).map(m => parseFloat(m.engHrs)));
 
   const grouped = filtered.reduce((acc, row) => {
     if (!acc[row.system]) acc[row.system] = [];
@@ -413,7 +413,7 @@ function ScheduleModal({ onClose, maintenanceData }) {
           <div className="schedule-sys-heading">{sys}</div>
           {rows.map((row, i) => {
             const lastDone = findLastDone(row, maintenanceData);
-            const currentHrs = row.system === "Yanmar" ? currentYanmarHrs : row.system === "Generator" ? currentGenHrs : null;
+            const currentHrs = row.system === "Yanmar" ? currentYanmarHrs : row.system === "Westerbeke" ? currentGenHrs : null;
             const status = getMaintenanceStatus(row, lastDone, currentHrs);
             return (
               <div key={i} className="schedule-row">
@@ -1210,6 +1210,19 @@ export default function App() {
     }, 800);
     return () => clearTimeout(t);
   }, [data]);
+
+  // One-time migration: rename any "Generator" maintenance records to "Westerbeke"
+  useEffect(() => {
+    if (!data?.maintenance) return;
+    const hasOld = data.maintenance.some(m => m.system === "Generator");
+    if (!hasOld) return;
+    setData(d => ({
+      ...d,
+      maintenance: d.maintenance.map(m =>
+        m.system === "Generator" ? { ...m, system: "Westerbeke" } : m
+      )
+    }));
+  }, [data?.maintenance?.length]);
 
   const update = (key) => (val) => setData(d => ({ ...d, [key]: val }));
 
