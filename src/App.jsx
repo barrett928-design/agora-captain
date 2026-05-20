@@ -1192,11 +1192,13 @@ function ChatBot({ data }) {
 export default function App() {
   const [tab, setTab] = useState(0);
   const [data, setData] = useState(INITIAL_DATA);
+  const firebaseLoaded = useRef(false);
 
   useEffect(() => {
     const dataRef = ref(db, "agora");
     const unsubscribe = onValue(dataRef, (snapshot) => {
       const val = snapshot.val();
+      firebaseLoaded.current = true;
       if (val) setData(val);
       else setData(INITIAL_DATA);
     });
@@ -1204,7 +1206,7 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    if (!data) return;
+    if (!data || !firebaseLoaded.current) return;
     const t = setTimeout(() => {
       set(ref(db, "agora"), data);
     }, 800);
