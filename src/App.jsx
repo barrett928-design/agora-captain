@@ -1,4 +1,4 @@
-import { useState, useEffect} from "react";
+import { useState, useEffect, useRef } from "react";
 import { db } from "./firebase";
 import { ref, onValue, set } from "firebase/database";
 
@@ -348,6 +348,55 @@ function Maintenance({ data, setData }) {
   );
 }
 
+// ─── STATUS PICKER ───────────────────────────────────────────────────────────
+function StatusPicker({ status, onChange }) {
+  const [open, setOpen] = useState(false);
+  const [rect, setRect] = useState(null);
+  const btnRef = useRef(null);
+
+  const toggle = (e) => {
+    e.stopPropagation();
+    if (!open) setRect(btnRef.current.getBoundingClientRect());
+    setOpen(o => !o);
+  };
+
+  const pick = (s) => { onChange(s); setOpen(false); };
+
+  const cls = status === "Open" ? "open" : status === "In Progress" ? "progress" : "done";
+
+  return (
+    <>
+      <button ref={btnRef} onClick={toggle} className={`badge badge-${cls}`}
+        style={{cursor:'pointer',border:'none',fontFamily:'inherit',userSelect:'none'}}>
+        {status} ▾
+      </button>
+      {open && rect && (
+        <>
+          <div style={{position:'fixed',inset:0,zIndex:199}} onClick={()=>setOpen(false)} />
+          <div style={{
+            position:'fixed', top: rect.bottom + 4, left: rect.left,
+            zIndex: 200, background: '#0d2535',
+            border: '1px solid rgba(255,255,255,0.15)', borderRadius: 6,
+            overflow: 'hidden', minWidth: 130,
+            boxShadow: '0 8px 24px rgba(0,0,0,0.6)',
+          }}>
+            {STATUSES.map(s => (
+              <button key={s} onClick={()=>pick(s)} style={{
+                display:'block', width:'100%', padding:'10px 14px',
+                background: s===status ? 'rgba(255,255,255,0.08)' : 'transparent',
+                border:'none', textAlign:'left', cursor:'pointer',
+                fontFamily:'inherit', fontSize:13,
+                color: s===status ? WHITE : MUTED,
+                fontWeight: s===status ? 600 : 400,
+              }}>{s}</button>
+            ))}
+          </div>
+        </>
+      )}
+    </>
+  );
+}
+
 // ─── PROJECTS ─────────────────────────────────────────────────────────────
 function Projects({ data, setData }) {
   const [modal, setModal] = useState(null);
@@ -363,10 +412,7 @@ function Projects({ data, setData }) {
     setModal(null);
   };
   const del = (id) => setData(data.filter(p=>p.id!==id));
-  const cycle = (p) => {
-    const s = {Open:"In Progress","In Progress":"Done",Done:"Open"};
-    setData(data.map(x=>x.id===p.id?{...x,status:s[x.status]}:x));
-  };
+  const setStatus = (p, s) => setData(data.map(x=>x.id===p.id?{...x,status:s}:x));
 
   const filtered = data.filter(p=>(filterPri==="All"||p.priority===filterPri)&&(filterStatus==="All"||p.status===filterStatus));
   const open = filtered.filter(p=>p.status!=="Done").length;
@@ -396,7 +442,7 @@ function Projects({ data, setData }) {
             </div>
             <div style={{display:'flex',gap:6,alignItems:'center',flexShrink:0}}>
               <span className={`badge badge-${p.priority?.toLowerCase()||'low'}`}>{p.priority}</span>
-              <button onClick={()=>cycle(p)} className={`badge badge-${p.status==="Open"?"open":p.status==="In Progress"?"progress":"done"}`} style={{cursor:'pointer',border:'none',fontFamily:'inherit'}}>{p.status}</button>
+              <StatusPicker status={p.status} onChange={s=>setStatus(p,s)} />
               <button className="btn btn-danger btn-sm" onClick={()=>del(p.id)}>✕</button>
             </div>
           </div>
