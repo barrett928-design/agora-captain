@@ -627,6 +627,55 @@ function Maintenance({ data, setData }) {
   );
 }
 
+// ─── STATUS PICKER ───────────────────────────────────────────────────────────
+function StatusPicker({ status, onChange }) {
+  const [open, setOpen] = useState(false);
+  const [rect, setRect] = useState(null);
+  const btnRef = useRef(null);
+
+  const toggle = (e) => {
+    e.stopPropagation();
+    if (!open) setRect(btnRef.current.getBoundingClientRect());
+    setOpen(o => !o);
+  };
+
+  const pick = (s) => { onChange(s); setOpen(false); };
+
+  const cls = status === "Open" ? "open" : status === "In Progress" ? "progress" : "done";
+
+  return (
+    <>
+      <button ref={btnRef} onClick={toggle} className={`badge badge-${cls}`}
+        style={{cursor:'pointer',border:'none',fontFamily:'inherit',userSelect:'none'}}>
+        {status} ▾
+      </button>
+      {open && rect && (
+        <>
+          <div style={{position:'fixed',inset:0,zIndex:199}} onClick={()=>setOpen(false)} />
+          <div style={{
+            position:'fixed', top: rect.bottom + 4, left: rect.left,
+            zIndex: 200, background: '#0d2535',
+            border: '1px solid rgba(255,255,255,0.15)', borderRadius: 6,
+            overflow: 'hidden', minWidth: 130,
+            boxShadow: '0 8px 24px rgba(0,0,0,0.6)',
+          }}>
+            {STATUSES.map(s => (
+              <button key={s} onClick={()=>pick(s)} style={{
+                display:'block', width:'100%', padding:'10px 14px',
+                background: s===status ? 'rgba(255,255,255,0.08)' : 'transparent',
+                border:'none', textAlign:'left', cursor:'pointer',
+                fontFamily:'inherit', fontSize:13,
+                color: s===status ? WHITE : MUTED,
+                fontWeight: s===status ? 600 : 400,
+              }}>{s}</button>
+            ))}
+          </div>
+        </>
+      )}
+    </>
+  );
+}
+
 // ─── PROJECTS ─────────────────────────────────────────────────────────────────
 function Projects({ data, setData }) {
   const [modal, setModal] = useState(null);
@@ -634,7 +683,6 @@ function Projects({ data, setData }) {
   const [filterPri, setFilterPri] = useState("All");
   const [filterStatus, setFilterStatus] = useState("Open");
   const [confirmDelete, setConfirmDelete] = useState(false);
-  const [statusMenu, setStatusMenu] = useState(null);
 
   const openNew = () => { setForm({ priority: "Med", status: "Open", who: "" }); setModal("new"); setConfirmDelete(false); };
   const openEdit = (p) => { setForm({ ...p }); setModal("edit"); setConfirmDelete(false); };
@@ -644,12 +692,7 @@ function Projects({ data, setData }) {
     setModal(null);
   };
   const del = (id) => { setData(data.filter(p => p.id !== id)); setModal(null); };
-
-  // Set status directly from the popup picker
-  const setStatus = (p, newStatus) => {
-    setData(data.map(x => x.id === p.id ? { ...x, status: newStatus } : x));
-    setStatusMenu(null);
-  };
+  const setStatus = (p, s) => setData(data.map(x => x.id === p.id ? { ...x, status: s } : x));
 
   const filtered = data
     .filter(p => (filterPri === "All" || p.priority === filterPri) && (filterStatus === "All" || p.status === filterStatus))
@@ -661,7 +704,7 @@ function Projects({ data, setData }) {
   const openCount = data.filter(p => p.status !== "Done").length;
 
   return (
-    <div onClick={() => setStatusMenu(null)}>
+    <div>
       <div className="action-bar">
         <div>
           <div className="section-title" style={{ margin: 0 }}>Projects & Tasks</div>
@@ -691,36 +734,9 @@ function Projects({ data, setData }) {
                 {p.who && <> · <strong>{p.who}</strong></>}
               </div>
             </div>
-            <div style={{ display: 'flex', gap: 6, alignItems: 'center', flexShrink: 0, position: 'relative' }}>
+            <div style={{ display: 'flex', gap: 6, alignItems: 'center', flexShrink: 0 }}>
               <span className={`badge badge-${p.priority?.toLowerCase() || 'low'}`}>{p.priority}</span>
-              {/* Tapping the status badge opens a picker — no cycling */}
-              <button
-                onClick={(e) => { e.stopPropagation(); setStatusMenu(statusMenu === p.id ? null : p.id); }}
-                className={`badge badge-${p.status === "Open" ? "open" : p.status === "In Progress" ? "progress" : "done"}`}
-                style={{ cursor: 'pointer', border: 'none', fontFamily: 'inherit' }}
-              >
-                {p.status} ▾
-              </button>
-              {statusMenu === p.id && (
-                <div style={{
-                  position: 'absolute', top: '110%', right: 0, zIndex: 100,
-                  background: '#1e2a38', border: '1px solid #2e3f52', borderRadius: 8,
-                  boxShadow: '0 4px 16px rgba(0,0,0,0.4)', padding: 6, display: 'flex', flexDirection: 'column', gap: 4, minWidth: 120
-                }}>
-                  {STATUSES.map(s => (
-                    <button key={s} onClick={(e) => { e.stopPropagation(); setStatus(p, s); }}
-                      className={`badge badge-${s === "Open" ? "open" : s === "In Progress" ? "progress" : "done"}`}
-                      style={{
-                        cursor: 'pointer', border: s === p.status ? '1px solid #fff' : 'none',
-                        fontFamily: 'inherit', padding: '5px 10px', textAlign: 'left', borderRadius: 6,
-                        opacity: s === p.status ? 1 : 0.7
-                      }}
-                    >
-                      {s === p.status ? '✓ ' : ''}{s}
-                    </button>
-                  ))}
-                </div>
-              )}
+              <StatusPicker status={p.status} onChange={s => setStatus(p, s)} />
             </div>
           </div>
           {p.notes && <div className="card-body"><div className="meta">{p.notes}</div></div>}
