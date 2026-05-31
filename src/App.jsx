@@ -3,7 +3,7 @@ import { db } from "./firebase";
 import { ref, onValue, set } from "firebase/database";
 
 // Projects moved to first tab
-const TABS = ["Projects", "Voyage Log", "Maintenance", "Fuel Log", "Spare Parts"];
+const TABS = ["Projects", "Voyage Log", "Maintenance", "Fuel Log", "Spare Parts", "Haul-Out"];
 
 const INITIAL_DATA = {
   voyages: [
@@ -78,6 +78,102 @@ const INITIAL_DATA = {
     { id: 18, system: "Tools", part: "Sail Repair Kit", qty: 1, location: "Port Settee", notes: "Assorted patches", partNum: "" },
   ],
   fuel: [],
+  haulout: [
+    { id: 1,  phase: "Critical",       priority: "High", status: "Open", task: "Renew insurance before haul-out",                        notes: "State Farm Policy #83-G0-K738-4 expires May 15, 2026. Confirm new policy covers vessel hauled in Grenada June–September." },
+    { id: 2,  phase: "Critical",       priority: "High", status: "Open", task: "Confirm shore power compatibility with yard",             notes: "Victron Multiplus accepts only 95–140V AC. Grenada is 220V/50Hz. Need 120V/60Hz pedestal or bring step-down transformer. ProNautic 1260P (100–250VAC) can run on 220V as fallback." },
+    { id: 3,  phase: "Critical",       priority: "High", status: "Open", task: "Inspect and address generator fuel & water leaks",        notes: "Both leaks noted Feb 2026. Inspect gaskets, fuel pump diaphragm, and heat exchanger connections. Address before leaving unattended." },
+    { id: 4,  phase: "Before Haul",    priority: "High", status: "Open", task: "Treat diesel with biocide (Biobor JF)",                  notes: "Tropical heat accelerates microbial growth in sitting fuel. Run treated fuel through both engines and Racor filter." },
+    { id: 5,  phase: "Before Haul",    priority: "Med",  status: "Open", task: "Fill diesel tank to ~90%",                               notes: "Minimizes air space and condensation. Leaves room for expansion." },
+    { id: 6,  phase: "Before Haul",    priority: "Med",  status: "Open", task: "Inspect/replace primary Racor fuel filter",               notes: "Easier to do while still afloat." },
+    { id: 7,  phase: "Before Haul",    priority: "High", status: "Open", task: "Note exact Yanmar hour meter reading",                   notes: "Last oil change Feb 2026 @ 2,276 meter hrs (actual ~3,985). Next oil change due at 2,526 meter / 250 hrs interval." },
+    { id: 8,  phase: "Before Haul",    priority: "High", status: "Open", task: "Inspect Yanmar raw water impeller",                      notes: "5 spares in Salon Seat Drawer. Replace if at or near 500 hr / 2-year interval." },
+    { id: 9,  phase: "Before Haul",    priority: "High", status: "Open", task: "Fog Yanmar cylinders for storage",                       notes: "With engine at full temp, spray fogging oil into air intake while running, then shut down." },
+    { id: 10, phase: "Before Haul",    priority: "Med",  status: "Open", task: "Check Yanmar coolant level and condition",               notes: "Last flush Feb 2026 — should be fine. Confirm level and color." },
+    { id: 11, phase: "Before Haul",    priority: "Med",  status: "Open", task: "Check Yanmar gear oil — change if due",                  notes: "Interval: 250 hrs. Check last change date." },
+    { id: 12, phase: "Before Haul",    priority: "Med",  status: "Open", task: "Cap Yanmar intake and exhaust",                          notes: "Use rags or foam plugs to block moisture and critters during storage." },
+    { id: 13, phase: "Before Haul",    priority: "High", status: "Open", task: "Generator: run 30 min under load, confirm leak status",  notes: "Carefully inspect fuel pump diaphragm, gaskets, heat exchanger connections. Document what you find." },
+    { id: 14, phase: "Before Haul",    priority: "High", status: "Open", task: "Generator: oil and filter change",                       notes: "Last done Feb 2026 @ 4,420 hrs. Filter: Sierra 23-7800." },
+    { id: 15, phase: "Before Haul",    priority: "High", status: "Open", task: "Generator: replace raw water impeller",                  notes: "Annual interval. 2 Westerbeke spares in V Berth." },
+    { id: 16, phase: "Before Haul",    priority: "High", status: "Open", task: "Generator: replace zinc anode P/N 011885",               notes: "6-month interval — critical. Had to chisel out last time. Clean threads thoroughly before installing new one." },
+    { id: 17, phase: "Before Haul",    priority: "Med",  status: "Open", task: "Generator: replace fuel filter",                         notes: "Annual interval. Do at same time as oil change." },
+    { id: 18, phase: "Before Haul",    priority: "Med",  status: "Open", task: "Fog generator cylinders for storage",                    notes: "Same procedure as Yanmar — fogging oil into intake while warm." },
+    { id: 19, phase: "Before Haul",    priority: "Med",  status: "Open", task: "Cap generator intake and exhaust",                       notes: "Rags or foam plugs. Prevents moisture and pest entry." },
+    { id: 20, phase: "Before Haul",    priority: "High", status: "Open", task: "Watermaker: flush membranes with fresh water",           notes: "Must flush before pickling." },
+    { id: 21, phase: "Before Haul",    priority: "High", status: "Open", task: "Watermaker: pickle membranes for long-term storage",     notes: "Use manufacturer's preservation solution. SeaWater Pro 40 GPH dual membrane." },
+    { id: 22, phase: "Before Haul",    priority: "High", status: "Open", task: "Close watermaker seacock",                               notes: "" },
+    { id: 23, phase: "Before Haul",    priority: "Med",  status: "Open", task: "AC: run system then flush raw water side",               notes: "Flush with fresh water before haul to clear salt and debris." },
+    { id: 24, phase: "Before Haul",    priority: "Med",  status: "Open", task: "AC: clean sea strainer and foam filter",                 notes: "Raw water pump replaced Jan 2025 — note for 2-yr replacement due Jan 2027." },
+    { id: 25, phase: "At the Yard",    priority: "High", status: "Open", task: "Pressure wash hull immediately after haul",              notes: "Must be done while hull is still wet." },
+    { id: 26, phase: "At the Yard",    priority: "High", status: "Open", task: "Full hull inspection: blisters, osmosis, damage",        notes: "Document and photograph any issues found." },
+    { id: 27, phase: "At the Yard",    priority: "High", status: "Open", task: "Exercise all seacocks",                                  notes: "Must move freely — no exceptions. Seized seacocks are a serious safety issue. Repack any that are stiff." },
+    { id: 28, phase: "At the Yard",    priority: "High", status: "Open", task: "Close and mark all seacocks for storage",                notes: "Tape or tag each one closed." },
+    { id: 29, phase: "At the Yard",    priority: "High", status: "Open", task: "Replace hull zincs",                                     notes: "Due annually or at 50% depletion." },
+    { id: 30, phase: "At the Yard",    priority: "Med",  status: "Open", task: "Inspect keel bolts",                                     notes: "Accessible while on the hard — check for corrosion or weeping." },
+    { id: 31, phase: "At the Yard",    priority: "Med",  status: "Open", task: "Inspect rudder pintles, gudgeons, and bearings",         notes: "" },
+    { id: 32, phase: "At the Yard",    priority: "Med",  status: "Open", task: "Inspect shaft seal and cutlass bearing",                 notes: "" },
+    { id: 33, phase: "At the Yard",    priority: "Med",  status: "Open", task: "Inspect Max Prop and replace shaft zinc",                notes: "Confirm pitch setting H: front/big E, back/small." },
+    { id: 34, phase: "At the Yard",    priority: "High", status: "Open", task: "Apply new bottom paint",                                 notes: "Ablative antifouling last done Nov 2025. ~7 months in tropical waters will have consumed most of it." },
+    { id: 35, phase: "At the Yard",    priority: "Med",  status: "Open", task: "Compound hull above waterline",                          notes: "Planned work." },
+    { id: 36, phase: "At the Yard",    priority: "Med",  status: "Open", task: "Wax hull above waterline after compounding",             notes: "" },
+    { id: 37, phase: "At the Yard",    priority: "Low",  status: "Open", task: "Touch up gel coat chips",                               notes: "Barrett — in progress." },
+    { id: 38, phase: "At the Yard",    priority: "Med",  status: "Open", task: "Inspect and re-seal hull-deck joint if worn",            notes: "" },
+    { id: 39, phase: "At the Yard",    priority: "High", status: "Open", task: "Clear all cockpit drains",                              notes: "Critical — Grenada rainy season June–September. A blocked drain is how boats sink on the hard." },
+    { id: 40, phase: "At the Yard",    priority: "Med",  status: "Open", task: "Check all deck hardware for loose fasteners",            notes: "Cleats, stanchions, chainplates." },
+    { id: 41, phase: "At the Yard",    priority: "Med",  status: "Open", task: "Inspect and reseal suspect deck penetrations",           notes: "" },
+    { id: 42, phase: "At the Yard",    priority: "Med",  status: "Open", task: "Inspect companionway hatch seals",                      notes: "" },
+    { id: 43, phase: "At the Yard",    priority: "High", status: "Open", task: "Install companionway and hatch covers",                  notes: "UV and rain protection. Essential for 4 months in Grenada." },
+    { id: 44, phase: "At the Yard",    priority: "Med",  status: "Open", task: "Replace windlass bolt",                                  notes: "Open project — easy to do while on the hard." },
+    { id: 45, phase: "At the Yard",    priority: "High", status: "Open", task: "Standing rigging full inspection",                       notes: "Check for broken strands, swage cracks, corrosion at chainplates, toggle and turnbuckle condition." },
+    { id: 46, phase: "At the Yard",    priority: "Med",  status: "Open", task: "Check mast base and step for corrosion",                 notes: "" },
+    { id: 47, phase: "At the Yard",    priority: "Med",  status: "Open", task: "Running rigging: inspect halyards and sheets for chafe", notes: "" },
+    { id: 48, phase: "At the Yard",    priority: "Low",  status: "Open", task: "Service winches if approaching 2-year mark",             notes: "" },
+    { id: 49, phase: "At the Yard",    priority: "High", status: "Open", task: "Remove sails and store below or ashore",                 notes: "Grenada UV June–September is punishing. Removes wind load and reduces theft risk." },
+    { id: 50, phase: "Electrical",     priority: "High", status: "Open", task: "Connect shore power and verify Victron Multiplus settings", notes: "Absorption: 14.2–14.4V. Float: DISABLED (or max 13.5V). Temp compensation: 0 mV/°C DISABLED. Equalization: NEVER." },
+    { id: 51, phase: "Electrical",     priority: "Med",  status: "Open", task: "Review SmartShunt data before departure",               notes: "Note SOC trends and any anomalies. Installed Nov 2024 under port berth." },
+    { id: 52, phase: "Electrical",     priority: "Med",  status: "Open", task: "Turn off all non-essential DC loads",                   notes: "Instruments, AIS, chartplotter, VHF. Leave bilge pump float switch ON." },
+    { id: 53, phase: "Electrical",     priority: "High", status: "Open", task: "Confirm bilge pump float switch is armed and working",   notes: "Bilge pump replaced Jun 2025 (Jabsco 37202-2012). Rain collects in bilge even on the hard." },
+    { id: 54, phase: "Electrical",     priority: "Low",  status: "Open", task: "Disconnect engine start battery switch",                 notes: "If engine won't be run during storage. Lifeline GPL-31T." },
+    { id: 55, phase: "Interior",       priority: "High", status: "Open", task: "Install solar-powered ventilators on hatches",           notes: "Without ventilation in Grenada heat and humidity, expect mold everywhere on return." },
+    { id: 56, phase: "Interior",       priority: "High", status: "Open", task: "Leave all interior lockers and drawers open",            notes: "Airflow is the primary mold prevention strategy." },
+    { id: 57, phase: "Interior",       priority: "Med",  status: "Open", task: "Leave all cabin and head doors open",                   notes: "" },
+    { id: 58, phase: "Interior",       priority: "Med",  status: "Open", task: "Prop settee cushions and mattresses vertically",         notes: "Allows airflow underneath. Prevents mildew on the foam." },
+    { id: 59, phase: "Interior",       priority: "High", status: "Open", task: "Wipe all surfaces with dilute bleach solution",          notes: "Treat before closing up. Focus on heads, bilge area, and any existing mildew spots." },
+    { id: 60, phase: "Interior",       priority: "High", status: "Open", task: "Place DampRid moisture absorbers throughout",           notes: "Ask boat watcher to replace monthly. Put in cabins, heads, salon, and bilge area." },
+    { id: 61, phase: "Interior",       priority: "Med",  status: "Open", task: "Empty and clean refrigerator, leave door propped open", notes: "" },
+    { id: 62, phase: "Interior",       priority: "Med",  status: "Open", task: "Remove all food and perishables",                       notes: "Anything organic or in cardboard. Heat will destroy it and attract pests." },
+    { id: 63, phase: "Interior",       priority: "Med",  status: "Open", task: "Install rodent guards on shore power cord",             notes: "Where cord enters the boat. Rodents in tropical boatyards are common." },
+    { id: 64, phase: "Interior",       priority: "Med",  status: "Open", task: "Stuff stainless steel wool in exhaust outlets",         notes: "Blocks insects and rodents from nesting in engine exhaust." },
+    { id: 65, phase: "Interior",       priority: "Med",  status: "Open", task: "Set bait blocks or traps in bilge and lockers",         notes: "Coordinate with boat watcher to check and replace." },
+    { id: 66, phase: "Interior",       priority: "High", status: "Open", task: "Pump out holding tanks completely, flush",              notes: "Pump out both tanks. Flush with fresh water." },
+    { id: 67, phase: "Interior",       priority: "Med",  status: "Open", task: "Treat fresh water tanks with dilute bleach, flush taps", notes: "Prevents bacterial growth in tanks sitting 4 months." },
+    { id: 68, phase: "Interior",       priority: "Med",  status: "Open", task: "Inspect head vent hoses",                               notes: "Blocked vents cause pressure buildup and seal failure. Check both heads." },
+    { id: 69, phase: "Interior",       priority: "Low",  status: "Open", task: "Note tank meter readings",                              notes: "Fwd and aft holding tank meters installed Mar 2025." },
+    { id: 70, phase: "Safety & Docs",  priority: "High", status: "Open", task: "Inspect fire extinguishers",                           notes: "Check pressure, tags, and mounting brackets. High priority open project." },
+    { id: 71, phase: "Safety & Docs",  priority: "High", status: "Open", task: "Inspect fire suppressants",                            notes: "High priority open project." },
+    { id: 72, phase: "Safety & Docs",  priority: "Med",  status: "Open", task: "Remove EPIRB from mount or secure per yard protocol",  notes: "HEX ID: 2DDAAdb6d23fdff. Battery expiry July 2035." },
+    { id: 73, phase: "Safety & Docs",  priority: "Med",  status: "Open", task: "Remove both PLBs",                                     notes: "ACR ResQLink AIS units. Store with Barrett or trusted contact." },
+    { id: 74, phase: "Safety & Docs",  priority: "Med",  status: "Open", task: "Remove handheld electronics",                          notes: "VHF handhelds, iPad/phone used for charts." },
+    { id: 75, phase: "Safety & Docs",  priority: "Med",  status: "Open", task: "Photograph entire boat interior and exterior",         notes: "Insurance documentation. Do before leaving." },
+    { id: 76, phase: "Safety & Docs",  priority: "Med",  status: "Open", task: "Leave vessel documentation copy with yard",            notes: "USCG docs (exp 10/31/2027), registration TX-6565-KX, insurance policy." },
+    { id: 77, phase: "Safety & Docs",  priority: "Med",  status: "Open", task: "Provide yard with contact info and emergency contacts", notes: "" },
+    { id: 78, phase: "Final Steps",    priority: "High", status: "Open", task: "Confirm every seacock is closed — touch each handle",  notes: "Do this last, as a dedicated walk-through." },
+    { id: 79, phase: "Final Steps",    priority: "High", status: "Open", task: "Shore power connected and reading correctly",          notes: "Or properly secured/capped if not available." },
+    { id: 80, phase: "Final Steps",    priority: "High", status: "Open", task: "All hatches dogged down and locked",                   notes: "" },
+    { id: 81, phase: "Final Steps",    priority: "High", status: "Open", task: "Companionway locked",                                  notes: "" },
+    { id: 82, phase: "Final Steps",    priority: "Med",  status: "Open", task: "All halyards tied off and secured",                    notes: "Slapping lines in tropical squalls damage the rig and annoy the yard." },
+    { id: 83, phase: "Final Steps",    priority: "High", status: "Open", task: "Sails secured or removed and stored",                  notes: "" },
+    { id: 84, phase: "Final Steps",    priority: "High", status: "Open", task: "Confirm jackstand placement and count with yard",      notes: "Minimum 5-point support for a 47-footer." },
+    { id: 85, phase: "Final Steps",    priority: "High", status: "Open", task: "Secure dinghy and outboard ashore",                   notes: "Tohatsu MFS 15E is a theft target. Store outboard locked or with trusted contact." },
+    { id: 86, phase: "Return to Water", priority: "High", status: "Open", task: "Re-inspect bottom paint before splash",              notes: "Recoat if needed after 4 months in Grenada heat." },
+    { id: 87, phase: "Return to Water", priority: "High", status: "Open", task: "Verify all seacocks operate freely before splash",   notes: "" },
+    { id: 88, phase: "Return to Water", priority: "High", status: "Open", task: "Remove stuffing from all intake and exhaust outlets", notes: "Stainless wool from exhaust, rags from engine intakes." },
+    { id: 89, phase: "Return to Water", priority: "High", status: "Open", task: "Reload removed equipment",                           notes: "Outboard, EPIRBs, PLBs, handheld electronics." },
+    { id: 90, phase: "Return to Water", priority: "Med",  status: "Open", task: "Flush and refill fresh water system",               notes: "" },
+    { id: 91, phase: "Return to Water", priority: "High", status: "Open", task: "Check bilge is dry before splash",                   notes: "" },
+    { id: 92, phase: "Return to Water", priority: "High", status: "Open", task: "Check shaft seal before splash",                    notes: "" },
+    { id: 93, phase: "Return to Water", priority: "Med",  status: "Open", task: "Note engine hours at splash",                       notes: "" },
+    { id: 94, phase: "Return to Water", priority: "High", status: "Open", task: "After splash: verify no water intrusion at through-hulls and shaft seal", notes: "Check before leaving the dock." },
+  ],
 };
 
 const CHECKLIST_ITEMS = {
@@ -168,6 +264,7 @@ const PRIORITIES = ["High", "Med", "Low"];
 const STATUSES = ["Open", "In Progress", "Done"];
 // Assignee picklist — Barrett, Susanna, Both, or unassigned
 const ASSIGNEES = ["", "Barrett", "Susanna", "Both"];
+const HAUL_PHASES = ["Critical", "Before Haul", "At the Yard", "Electrical", "Interior", "Safety & Docs", "Final Steps", "Return to Water"];
 
 // ── PALETTE — dark gradient header + cream content (Sue's color circles) ──────
 const SCAN_RECEIPT_URL = "https://scanfuelreceipt-qbqkp5vmrq-uc.a.run.app";
@@ -1066,6 +1163,125 @@ function FuelLog({ data, setData }) {
   );
 }
 
+// ─── HAUL-OUT ─────────────────────────────────────────────────────────────────
+function HaulOut({ data, setData }) {
+  const [modal, setModal] = useState(null);
+  const [form, setForm] = useState({});
+  const [filterPhase, setFilterPhase] = useState("All");
+  const [filterStatus, setFilterStatus] = useState("Open");
+  const [confirmDelete, setConfirmDelete] = useState(false);
+
+  const openNew = () => { setForm({ phase: "Before Haul", priority: "Med", status: "Open", notes: "" }); setModal("new"); setConfirmDelete(false); };
+  const openEdit = (item) => { setForm({ ...item }); setModal("edit"); setConfirmDelete(false); };
+  const save = () => {
+    if (modal === "new") setData([...data, { ...form, id: Date.now() }]);
+    else setData(data.map(d => d.id === form.id ? form : d));
+    setModal(null);
+  };
+  const del = (id) => { setData(data.filter(d => d.id !== id)); setModal(null); };
+  const setStatus = (item, s) => setData(data.map(d => d.id === item.id ? { ...d, status: s } : d));
+
+  const filtered = data
+    .filter(d => (filterPhase === "All" || d.phase === filterPhase) && (filterStatus === "All" || d.status === filterStatus))
+    .sort((a, b) => {
+      const phaseOrder = HAUL_PHASES.reduce((acc, p, i) => ({ ...acc, [p]: i }), {});
+      const priOrder = { High: 0, Med: 1, Low: 2 };
+      return (phaseOrder[a.phase] ?? 99) - (phaseOrder[b.phase] ?? 99) || (priOrder[a.priority] ?? 2) - (priOrder[b.priority] ?? 2);
+    });
+
+  const total = data.length;
+  const done = data.filter(d => d.status === "Done").length;
+  const pct = total ? Math.round((done / total) * 100) : 0;
+
+  return (
+    <div>
+      <div className="action-bar">
+        <div>
+          <div className="section-title" style={{ margin: 0 }}>Grenada Haul-Out 2026</div>
+          <div className="meta" style={{ marginTop: 2 }}>{done} of {total} complete</div>
+        </div>
+        <button className="btn btn-primary btn-sm" onClick={openNew}>+ Add Item</button>
+      </div>
+
+      <div className="progress-bar" style={{ marginBottom: 16 }}>
+        <div className="progress-fill" style={{ width: `${pct}%` }} />
+      </div>
+
+      <div className="filter-row" style={{ marginBottom: 8 }}>
+        {["All", "Open", "In Progress", "Done"].map(s => (
+          <button key={s} className={`filter-chip ${filterStatus === s ? "active" : ""}`} onClick={() => setFilterStatus(s)}>{s}</button>
+        ))}
+      </div>
+      <div className="filter-row" style={{ marginBottom: 16 }}>
+        {["All", ...HAUL_PHASES].map(p => (
+          <button key={p} className={`filter-chip ${filterPhase === p ? "active" : ""}`} onClick={() => setFilterPhase(p)}>{p}</button>
+        ))}
+      </div>
+
+      {filtered.length === 0 && <div className="empty-state">No items match this filter.</div>}
+      {filtered.map(item => (
+        <div className="card" key={item.id}>
+          <div className="card-header">
+            <div style={{ flex: 1, cursor: 'pointer' }} onClick={() => openEdit(item)}>
+              <div style={{ fontSize: 14, fontWeight: 600, color: LIGHT, marginBottom: 3 }}>{item.task}</div>
+              <div className="meta">{item.phase}</div>
+            </div>
+            <div style={{ display: 'flex', gap: 6, alignItems: 'center', flexShrink: 0 }}>
+              <span className={`badge badge-${item.priority?.toLowerCase() || 'low'}`}>{item.priority}</span>
+              <StatusPicker status={item.status} onChange={s => setStatus(item, s)} />
+            </div>
+          </div>
+          {item.notes && <div className="card-body"><div className="meta">{item.notes}</div></div>}
+        </div>
+      ))}
+
+      {modal && (
+        <Modal title={modal === "new" ? "Add Item" : "Edit Item"} onClose={() => setModal(null)}>
+          <Field label="Task">
+            <input value={form.task || ""} onChange={e => setForm({ ...form, task: e.target.value })} placeholder="What needs to be done?" />
+          </Field>
+          <div className="grid2">
+            <Field label="Phase">
+              <select value={form.phase || "Before Haul"} onChange={e => setForm({ ...form, phase: e.target.value })}>
+                {HAUL_PHASES.map(p => <option key={p}>{p}</option>)}
+              </select>
+            </Field>
+            <Field label="Priority">
+              <select value={form.priority || "Med"} onChange={e => setForm({ ...form, priority: e.target.value })}>
+                {PRIORITIES.map(p => <option key={p}>{p}</option>)}
+              </select>
+            </Field>
+          </div>
+          <Field label="Status">
+            <select value={form.status || "Open"} onChange={e => setForm({ ...form, status: e.target.value })}>
+              {STATUSES.map(s => <option key={s}>{s}</option>)}
+            </select>
+          </Field>
+          <Field label="Notes">
+            <textarea value={form.notes || ""} onChange={e => setForm({ ...form, notes: e.target.value })} />
+          </Field>
+          <div className="modal-footer">
+            <button className="btn btn-ghost" onClick={() => setModal(null)}>Cancel</button>
+            <button className="btn btn-primary" onClick={save}>Save</button>
+          </div>
+          {modal === "edit" && (
+            <div className="delete-zone">
+              <span className="delete-zone-label">Permanent — cannot be undone</span>
+              {!confirmDelete
+                ? <button className="btn btn-danger btn-sm" onClick={() => setConfirmDelete(true)}>Delete Item</button>
+                : <div style={{ display: 'flex', gap: 8 }}>
+                    <button className="btn btn-ghost btn-sm" onClick={() => setConfirmDelete(false)}>Keep It</button>
+                    <button className="btn btn-danger btn-sm" onClick={() => del(form.id)}>Yes, Delete</button>
+                  </div>
+              }
+            </div>
+          )}
+        </Modal>
+      )}
+    </div>
+  );
+}
+
 // ─── CHECKLISTS ───────────────────────────────────────────────────────────────
 function Checklists() {
   const [checks, setChecks] = useState({ departure: {}, arrival: {}, packup: {} });
@@ -1273,6 +1489,7 @@ export default function App() {
           {tab === 2 && <Maintenance data={data.maintenance} setData={update("maintenance")} />}
           {tab === 3 && <FuelLog data={data.fuel || []} setData={update("fuel")} />}
           {tab === 4 && <SpareParts data={data.parts} setData={update("parts")} />}
+          {tab === 5 && <HaulOut data={data.haulout || []} setData={update("haulout")} />}
         </div>
       </div>
       <ChatBot data={data} />
