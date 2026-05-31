@@ -1431,7 +1431,7 @@ export default function App() {
     const unsubscribe = onValue(dataRef, (snapshot) => {
       const val = snapshot.val();
       firebaseLoaded.current = true;
-      if (val) setData(val);
+      if (val) setData({ ...INITIAL_DATA, ...val });
       else setData(INITIAL_DATA);
     });
     return () => unsubscribe();
