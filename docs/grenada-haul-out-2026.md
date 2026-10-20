@@ -8,12 +8,12 @@
 - [ ] **Insurance renewal** — State Farm Policy #83-G0-K738-4 **expires May 15, 2026**. Must renew before haul-out AND confirm new policy covers a vessel hauled in Grenada June–September
 - [ ] **Shore power compatibility** — Boat is 120V / 60 Hz, 50A. Victron Multiplus accepts only 95–140V AC (never connect it to 220V). Grenada island standard is 220V/50Hz, but some marinas offer 120V. Known options (Oct 2026):
   - **Spice Island Marine** — advertises both 110V/60Hz and 220V/50Hz at its 14 slips (best match). Confirm 60 Hz is also available on the hard, plus amperage and plug type. +1 473 444 4257 · simsco@spiceislandmarine.com · VHF 16
-  - **Le Phare Bleu** — 110V / 50A / **50 Hz**. Plugs straight in, but 50 Hz
+  - **Le Phare Bleu** — 110V / 50A / **50 Hz**. Plugs straight in; ACs OK at ~17% reduced capacity (Dometic confirmed)
   - **The Cove** — 110V / **30A** / **50 Hz**. Needs 30A→50A adapter and Victron input limit set to ~28–30A; roughly one AC at a time
   - Without 120V, a step-down transformer is needed. The ProNautic 1260P (100–250VAC) *can* run on 220V as a fallback charger
-- [ ] **AC units are 60 Hz only** — both Dometic units checked (DTU10-1161-410A, DTU16-410A) are labeled 115V/60Hz. Don't run them on 50 Hz shore power unless Dometic confirms in writing. AC raw water pump is 50/60 Hz (OK). At a 50 Hz marina, cool with the generator or the Victron inverter instead
+- [x] **AC units on 50 Hz** — Dometic units (DTU10-1161-410A, DTU16-410A) are labeled 115V/60Hz, but Dometic confirmed (Thomas Asay, Tech Support, Oct 2026) they can run on 115V/50Hz, derated ~17%. AC raw water pump is 50/60 Hz (OK). Keep the sea strainer clean, check discharge flow and watch for high-pressure faults the first day, and avoid high dock voltage (~125V+)
   - [ ] Check stern AC data plate
-  - [ ] Ask Dometic (954-973-2477) whether these units can run on 120V/50Hz
+  - [x] Ask Dometic whether these units can run on 50 Hz — yes, ~17% derate
   - [ ] Check whether the AC breakers are fed by the Victron output (needed to run AC from the inverter)
 - [ ] **Generator leaks** — fuel leak and water leak noted Feb 2026. Address or at minimum do a full inspection before leaving for 4 months unattended
 
@@ -106,7 +106,7 @@
   - Float: **DISABLED** (or max 13.5V if must be set)
   - Temperature compensation: **0 mV/°C — DISABLED**
   - Equalization: **NEVER**
-- [ ] If 120V is 50 Hz: batteries and electronics are fine; do not run the AC units on shore power (see critical items). On 30A, set Victron AC input current limit to ~28–30A
+- [ ] If 120V is 50 Hz: batteries and electronics are fine; AC units OK at ~17% reduced capacity (see critical items). On 30A, set Victron AC input current limit to ~28–30A
 - [ ] If only 220V available: use ProNautic 1260P on 220V shore power as the charger (it handles 100–250V); **do not connect the Multiplus to 220V**
 - [ ] Download and review SmartShunt data before departure — note SOC trends and any anomalies
 - [ ] Turn off all non-essential DC loads: instruments, AIS, chartplotter, VHF (leave bilge pump ON)

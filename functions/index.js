@@ -245,11 +245,11 @@ Heads:
 Bilge pump: Jabsco 37202-2012 (replaced Jun 2025); test auto float switch monthly
 AC system: raw water pump replaced Jan 2025; clean sea strainer monthly; boys' cabin AC open project (duct replacement needed)
 AC units (Dometic Turbo self-contained, R410A):
-- AC #1: DTU10-1161-410A, 10,000 BTU, 115V/60Hz ONLY, FLA 6.7A cool / 8.8A heat, LRA 42, S/N 83899785
-- AC #2: DTU16-410A, 16,000 BTU, 115V/60Hz ONLY, FLA 11.5A cool / 14.4A heat, LRA 63, S/N 73998690 (verify)
+- AC #1: DTU10-1161-410A, 10,000 BTU, 115V/60Hz label, FLA 6.7A cool / 8.8A heat, LRA 42, S/N 83899785
+- AC #2: DTU16-410A, 16,000 BTU, 115V/60Hz label, FLA 11.5A cool / 14.4A heat, LRA 63, S/N 73998690 (verify)
 - Stern AC: model not yet recorded
 - AC raw water pump motor: Fasco 1/8 HP, 115V 50/60Hz, 2.1A (housing rusty as of Oct 2026)
-- 50 Hz shore power: AC units are NOT rated for 50 Hz — advise against running them on 50 Hz shore power unless Dometic confirms; use 60 Hz shore power, the generator, or the Victron inverter instead
+- 50 Hz shore power: Dometic confirmed (Thomas Asay, Dometic Tech Support, Oct 2026) the units can run on 115V/50Hz, derated ~17% (10k ≈ 8,300 BTU, 16k ≈ 13,300 BTU). Precautions: keep sea strainer clean, check overboard discharge flow, watch for high-pressure faults, avoid high dock voltage (~125V+). Stern AC not yet confirmed
 
 ---
 
