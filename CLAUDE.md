@@ -204,6 +204,8 @@ See `docs/deployment.md` for the full Firebase Functions IAM role checklist — 
 - Future option: Victron Cerbo GX for full integration with NMEA 2000, tank senders, solar
 
 ### AC Electrical
+- **Boat system is 120V / 60 Hz.** The "-50" in the Multiplus model name is its 50A transfer switch, not 50 Hz. Multiplus accepts 45–65 Hz input, but passes shore frequency through to the boat's outlets
+- **On 30A shore power:** use a 30A→50A adapter and set Victron AC input current limit to ~28–30A (set back to 50A afterward)
 - Xantrex PROwatt SW Transfer Switch 15A @ 120V 60Hz
 - Xantrex Sine Wave Inverter 1000 (1,000W continuous / 1,500W surge)
 
@@ -294,6 +296,15 @@ Note: There is also a Raymarine Linear Drive installation guide in the docs fold
 ## Systems
 
 ### AC System
+**Units (Dometic Turbo self-contained, R410A, U-Control):**
+| Unit | Model | BTU | Rating | FLA cool / heat | LRA | Serial |
+|---|---|---|---|---|---|---|
+| AC #1 | DTU10-1161-410A | 10,000 | **115V / 60 Hz only** | 6.7A / 8.8A | 42 | 83899785 |
+| AC #2 | DTU16-410A | 16,000 | **115V / 60 Hz only** | 11.5A / 14.4A | 63 | 73998690 (verify — hard to read) |
+| Stern AC | TBD — label not yet checked | — | — | — | — | — |
+
+- **Raw water pump motor:** Fasco 1/8 HP, 115V **50/60 Hz**, 2.1A, 3,000 RPM, thermally protected. Housing noticeably rusty (Oct 2026) — check for drips above it / seal leak
+- **50 Hz shore power (Caribbean):** AC units are NOT rated for 50 Hz — don't run them on 50 Hz shore power unless Dometic confirms in writing. Pump is fine on 50 Hz. Use 60 Hz shore power, the generator, or the Victron inverter (only if AC breakers are on the Victron output — not yet verified)
 - **Raw water pump:** Replaced Jan 2025. Watch for reduced cooling. Replace every 2 years
 - **Sea strainer:** Clean monthly in season. Quick check every time aboard
 - **Foam filter:** Rinse in fresh water monthly in season

@@ -167,7 +167,7 @@ Charging:
   Charger DC output: 13.2–14.4V @ 120A | Max efficiency: 93% | Zero load: 13W
   LiFePO4 charger settings (programmed via VE.Configure): Absorption 14.2–14.4V / 2 hrs, Float 13.5V (prefer disabled), temp compensation DISABLED (0 mV/°C), equalization NEVER
 - Alternator isolator: Newmar 1-2-120
-- Shore power: 50-amp
+- Shore power: 50-amp, 120V / 60 Hz system ("-50" in the Multiplus name = 50A transfer switch, not 50 Hz). Multiplus accepts 45–65 Hz input but passes shore frequency through to outlets. On 30A shore power: 30A→50A adapter + set Victron AC input current limit to ~28–30A
 - Victron SmartShunt installed Nov 2024 (port berth)
 
 AC Electrical: Xantrex PROwatt SW Transfer Switch (15A @ 120V) | Xantrex Inverter 1000W continuous / 1,500W surge
@@ -244,6 +244,12 @@ Heads:
 
 Bilge pump: Jabsco 37202-2012 (replaced Jun 2025); test auto float switch monthly
 AC system: raw water pump replaced Jan 2025; clean sea strainer monthly; boys' cabin AC open project (duct replacement needed)
+AC units (Dometic Turbo self-contained, R410A):
+- AC #1: DTU10-1161-410A, 10,000 BTU, 115V/60Hz ONLY, FLA 6.7A cool / 8.8A heat, LRA 42, S/N 83899785
+- AC #2: DTU16-410A, 16,000 BTU, 115V/60Hz ONLY, FLA 11.5A cool / 14.4A heat, LRA 63, S/N 73998690 (verify)
+- Stern AC: model not yet recorded
+- AC raw water pump motor: Fasco 1/8 HP, 115V 50/60Hz, 2.1A (housing rusty as of Oct 2026)
+- 50 Hz shore power: AC units are NOT rated for 50 Hz — advise against running them on 50 Hz shore power unless Dometic confirms; use 60 Hz shore power, the generator, or the Victron inverter instead
 
 ---
 
