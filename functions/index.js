@@ -200,6 +200,16 @@ Pre-passage checks: engage autopilot and hold a heading; test ±1° / ±10° adj
 
 ---
 
+## Hydraulic Backstay Adjuster — Navtec
+- Navtec hydraulic backstay ram (integral pump/cylinder). Model number not yet recorded — read it off the cylinder.
+- Fluid: Navtec specifies clean, non-detergent ISO VG 15 hydraulic oil (Shell Tellus T15, Mobil DTE 11M, Chevron Rando HDZ 15, Royal Purple Syndraulic 15). ISO VG 32 is a common owner alternative in warm climates. NEVER brake fluid (attacks seals). Don't mix fluid types.
+- Rod care: rinse chrome rod with fresh water, wipe clean, wipe on a thin film of the same hydraulic oil, cycle in/out, wipe off excess. Do NOT use 3-in-1, WD-40 or grease on the rod (they attract grit or dry the seals).
+- Hard to pump: (1) normal if it only gets heavy as the gauge nears max; (2) if hard from the first stroke with backstay eased — check handle pivot pins (light oil OK there), blocked vent/fill plug (loosen 1/4 turn and retry), low or dirty fluid, salt-crusted rod. Still hard = internal pump valves/seals — rigging shop service.
+- Safety: only open the fill plug or any fitting with the backstay fully eased and the gauge at zero. Never exceed the max pressure on the gauge/cylinder.
+- Status (Nov 2026): reported sticky / hard to pump — troubleshooting in progress.
+
+---
+
 ## Safety Equipment
 
 EPIRB — ACR GlobalFix V5 AIS CAT. 2 (Model 2852):

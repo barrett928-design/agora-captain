@@ -173,6 +173,7 @@ See docs/safety.md for activation procedures.
 | Chartplotter | Raymarine Axiom Pro 9s |
 | AIS | Raymarine AIS650 (MMSI 368362150) |
 | Autopilot | Raymarine EV-1 (hydraulic) |
+| Backstay adjuster | Navtec hydraulic ram — ISO VG 15 hydraulic oil (see docs/navtec-backstay.md) |
 | Cellular modem | Peplink BR1 Mini (CAT-7 LTE) |
 | Satellite | Starlink (installed Jan 2025) |
 

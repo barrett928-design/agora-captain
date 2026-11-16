@@ -323,6 +323,11 @@ Note: There is also a Raymarine Linear Drive installation guide in the docs fold
 - **Standing rigging:** Inspect annually — broken strands, cracks at swage fittings, rust at chainplates
 - **Running rigging:** Inspect annually — chafe on halyards/sheets
 - **Winch service:** Every 2 years — disassemble, clean, regrease
+- **Hydraulic backstay adjuster — Navtec:** see `docs/navtec-backstay.md`
+  - Fluid: **ISO VG 15 non-detergent hydraulic oil** (Navtec spec — Shell Tellus T15, Mobil DTE 11M, Chevron Rando HDZ 15). ISO 32 is a common alternative. **Never brake fluid**
+  - Rod care: monthly in season — rinse, wipe, thin film of hydraulic oil. No 3-in-1, WD-40, or grease on the rod
+  - Annually: oil handle pivots, clean vent/fill plug, check fluid level/color (backstay eased, gauge at zero)
+  - Nov 2026: sticky / hard to pump — troubleshooting in progress. Model number not yet recorded
 
 ---
 
@@ -396,6 +401,7 @@ Detailed system notes in `/docs/` — read on demand:
 - `docs/chartplotter.md` — Raymarine Axiom Pro 9s; NMEA 2000 network diagnostics
 - `docs/vhf.md` — ICOM IC-M602; DSC distress procedure, MMSI notes
 - `docs/tohatsu.md` — Tohatsu MFS 15E outboard; oil specs, gasket open item
+- `docs/navtec-backstay.md` — Navtec hydraulic backstay adjuster; fluid spec, rod care, hard-to-pump troubleshooting
 - `docs/chatbot-system-prompt.md` — Draft system prompt for the future in-app AI assistant; consolidates all IDs, specs, and quick-reference info
 
 ### Manuals still needed (no doc yet)
